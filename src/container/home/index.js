@@ -4,6 +4,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Logo from '../../assets/amazonLogo.jpg'
 import Image from '../../assets/image1.jpeg'
 import { useHistory } from "react-router-dom";
+import StarOutlineRoundedIcon from '@material-ui/icons/StarOutlineRounded';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -26,35 +27,46 @@ export default function Home() {
     const handleBackbutton = () => {
         history.goBack()
     }
+
+    const cardArray = ['1', '2', '3', '4', '5', '6']
     return (
         <div className={classes.root}>
-            <Grid style={{height: '30%'}}>
-                <img src={Image} style={{width: '100%', height: '200px'}}></img>
+            <Grid style={{ height: '30%' }}>
+                <img src={Image} style={{ width: '100%', height: '200px' }}></img>
 
             </Grid>
-            <Paper elevation={15} style={{ height: '320px' , width: '20%'}}>
-                <Grid item>
-                    <Grid style={{ margin: '30px' }}> <img style={{ width: '100px' }} src={Logo} />
-                        <Grid >
-                            <Typography>Name </Typography>
-                        </Grid>
 
-                        <Grid container margin='20px'>
+            <Grid container spacing={3}>
 
-                            <Grid item style={{ margin: '10px' }}>
-                                <Input multiline variant='outlined' placeholder='Write your Feedback here..' />
+                {
+                    cardArray.map(card => {
+                        return (
+                            <Grid item>
+                                <Paper elevation={15} style={{ height: '386px' }}>
+                                    <img style={{ width: '271px', height: '166px' }} src={Logo} />
+                                    <Grid container style={{ margin: '30px', display: 'block' }}>
+                                        <Grid item>
+                                            {/* <Typography>Name </Typography> */}
+                                        </Grid>
+                                        <Grid item style={{ margin: '10px' }}>
+                                            <Input multiline variant='outlined' placeholder='Write your Feedback here..' />
+                                        </Grid>
+
+                                    </Grid>
+                                    <Grid style={{ display: 'flex', justifyContent: 'center' }}>
+                                        <Button variant='contained' color='secondary'> Add To Cart</Button>
+
+                                    </Grid>
+                                    <Grid  style={{ display: 'flex', justifyContent: 'center' }}>
+                                        <StarOutlineRoundedIcon />
+                                    </Grid>
+                                </Paper>
                             </Grid>
-                        </Grid>
-                        <Grid item>
-                            <Button variant='contained' color='secondary'> Add To Cart</Button>
+                        )
+                    })
+                }
 
-                        </Grid>
-
-                    </Grid>
-
-                </Grid>
-
-            </Paper>
+            </Grid>
         </div>
     )
 }

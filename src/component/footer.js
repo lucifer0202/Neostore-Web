@@ -17,8 +17,8 @@ export default function Footer() {
     };
     return (
         <div style={{
-            position: 'fixed',
-            bottom: '0',
+            // position: 'fixed',
+            // bottom: '0',
             width: '100%',
         }}>
             <div position="static" style={{ background: '#9e9e9e' }}>
