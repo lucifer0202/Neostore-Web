@@ -55,10 +55,10 @@ export default function Home() {
                                     </Grid>
                                     <Grid style={{ display: 'flex', justifyContent: 'center' }}>
                                         <Button variant='contained' color='secondary'> Add To Cart</Button>
-
+                                       
                                     </Grid>
-                                    <Grid  style={{ display: 'flex', justifyContent: 'center' }}>
-                                        <StarOutlineRoundedIcon />
+                                    <Grid>
+
                                     </Grid>
                                 </Paper>
                             </Grid>

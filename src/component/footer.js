@@ -37,15 +37,12 @@ export default function Footer() {
                             <a href="https://www.google.co.in/maps/@28.0200723,79.1435639,15z"
                                 target="_blank">Locate Us</a>
                         </Typography>
-                        <Typography variant="body1" color="inherit">
+                        <Typography variant="body1" color="inherit" onClick={handleOpen}>
                             Subscription
-                            <button type="button" onClick={handleOpen}>
-                                Open Modal
-                            </button>
-                            {
-                                open? <MainModal open={open}  /> : null
-                            }
                         </Typography>
+                        {
+                            open && <MainModal open={open} />
+                        }
                     </Grid>
                     <Grid item>
                         <Typography variant="body1" color="inherit">
