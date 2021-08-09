@@ -4,7 +4,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Logo from '../../assets/amazonLogo.jpg'
 import Image from '../../assets/image1.jpeg'
 import { useHistory } from "react-router-dom";
-import StarOutlineRoundedIcon from '@material-ui/icons/StarOutlineRounded';
+import { FaStar } from 'react-icons/fa'
 
 
 const useStyles = makeStyles((theme) => ({
@@ -20,6 +20,35 @@ const useStyles = makeStyles((theme) => ({
 
     },
 }))
+
+
+const Star = ({ selected, onSelect }) => {
+    return <FaStar color={selected ? "red" : 'grey'}
+        onClick={onSelect} />
+}
+
+const CreateArray = (length) => [
+    ...Array(length)
+]
+const StarRating = ({ totalstar, }) => {
+    const [selectedStar, setSelectedStar] = useState(0)
+
+    return (
+        <>
+            {CreateArray(totalstar).map((n, i) => (
+
+                <Star
+                    key={i}
+                    selected={selectedStar > i}
+                    onSelect={() => setSelectedStar(i + 1)}
+                />
+            ))}
+
+            {/* <p>{selectedStar} out of {totalstar}</p> */}
+        </>
+    )
+
+}
 export default function Home() {
     const classes = useStyles();
     const history = useHistory();
@@ -44,21 +73,23 @@ export default function Home() {
                             <Grid item>
                                 <Paper elevation={15} style={{ height: '386px' }}>
                                     <img style={{ width: '271px', height: '166px' }} src={Logo} />
-                                    <Grid container style={{ margin: '30px', display: 'block' }}>
+                                    <Grid container spacing={2} style={{display: 'block',textAlign:'center', padding: '24px' }}>
                                         <Grid item>
-                                            {/* <Typography>Name </Typography> */}
+                                            <Typography style={{color: 'blue',  fontWeight: 'bold'}}>King size wood bed </Typography>
                                         </Grid>
-                                        <Grid item style={{ margin: '10px' }}>
-                                            <Input multiline variant='outlined' placeholder='Write your Feedback here..' />
+                                        <Grid item>
+                                            <Typography>600$ </Typography>
                                         </Grid>
 
-                                    </Grid>
-                                    <Grid style={{ display: 'flex', justifyContent: 'center' }}>
-                                        <Button variant='contained' color='secondary'> Add To Cart</Button>
-                                       
-                                    </Grid>
-                                    <Grid>
 
+                                        <Grid item>
+                                            <Button variant='contained' color='secondary'> Add To Cart</Button>
+
+                                        </Grid>
+                                        <Grid item>
+                                            <StarRating totalstar={5} />
+
+                                        </Grid>
                                     </Grid>
                                 </Paper>
                             </Grid>

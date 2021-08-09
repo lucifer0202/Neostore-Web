@@ -21,7 +21,8 @@ const useStyles = makeStyles((theme) => ({
     root: {
         flexGrow: 1,
         width: 'auto',
-        height: 'auto'
+        height: 'auto',
+        position: 'fixed'
     },
     menuButton: {
         marginRight: theme.spacing(2),
@@ -45,8 +46,8 @@ const useStyles = makeStyles((theme) => ({
     },
     gridContainer: {
         display: 'flex',
-        justifyContent: 'space-around'
-        // marginLeft: '80px'
+        justifyContent: 'space-around',
+        marginLeft: 'auto'
     },
 
     search: {
@@ -84,8 +85,10 @@ const useStyles = makeStyles((theme) => ({
 
     },
     button: {
-        background: 'white',
-
+        background: "white",
+        '&:hover': {
+            background: "#f00",
+        },
     },
     img: {
         width: '100px',
@@ -101,61 +104,51 @@ export default function Header() {
     const handleTabChange = (newTabIndex) => {
         setTabIndex(newTabIndex)
     }
-    const renderPageSwitch =(index) => {
-        switch(tabIndex) {
-            case 1:
-                return <Home />
-            case 2:
-                return <Product />
-            case 3:
-                return <Order />        
-        }
+    const handleAccount = () => {
+        
     }
-
     return (
-        <Grid className={classes.root}>
-            <AppBar position="static" style={{ backgroundColor: 'black' }}>
-                <Toolbar>
-                    <IconButton
-                        edge="start"
-                        className={classes.menuButton}
-                        color="inherit"
-                        aria-label="open drawer"
+        <AppBar positionFixed style={{ backgroundColor: 'black' }}>
+            <Toolbar>
+                <IconButton
+                    edge="start"
+                    className={classes.menuButton}
+                    color="inherit"
+                    aria-label="open drawer"
+                >
+                    <img className={classes.img} src={Logo} alt='logo' />
+                </IconButton>
+                <div className={classes.tabContainer}>
+                    <Tabs
+                        value={tabIndex}
+                        centered
+                        indicatorColor='black'
+                        onChange={(event, newTabIndex) => handleTabChange(newTabIndex)}
                     >
-                        <img className={classes.img} src={Logo} alt='logo' />
-                    </IconButton>
-                    <div className={classes.tabContainer}>
-                        <Tabs
-                            value={tabIndex}
-                            centered
-                            indicatorColor='black'
-                            onChange={(event,newTabIndex) => handleTabChange(newTabIndex) }
-                        >
-                            <Tab label='Home' className={classes.tab} value={1} href='/' />
-                            <Tab label='Product' className={classes.tab} value={2} href='/product' />
-                            <Tab label='Order' className={classes.tab} value={3} href='/order' />
-                        </Tabs>
-                    </div>
-                    <Grid className={classes.gridContainer}>
-                        <div className={classes.search}>
-                            <div className={classes.searchIcon}>
-                                <SearchIcon />
-                            </div>
-                            <InputBase
-                                placeholder="Search…"
-                                classes={{
-                                    root: classes.inputRoot,
-                                    input: classes.inputInput,
-                                }}
-                                inputProps={{ 'aria-label': 'search' }}
-                            />
+                        <Tab label='Home' className={classes.tab} value={1} href='/' />
+                        <Tab label='Product' className={classes.tab} value={2} href='/product' />
+                        <Tab label='Order' className={classes.tab} value={3} href='/order' />
+                    </Tabs>
+                </div>
+                <Grid className={classes.gridContainer}>
+                    <div className={classes.search}>
+                        <div className={classes.searchIcon}>
+                            <SearchIcon />
                         </div>
+                        <InputBase
+                            placeholder="Search…"
+                            classes={{
+                                root: classes.inputRoot,
+                                input: classes.inputInput,
+                            }}
+                            inputProps={{ 'aria-label': 'search' }}
+                        />
+                    </div>
 
-                        <Button className={classes.button}><ShoppingCartOutlinedIcon /></Button>
-                        <Button className={classes.button}><AccountCircleSharpIcon /></Button>
-                    </Grid>
-                </Toolbar>
-            </AppBar>
-        </Grid >
+                    <Button className={classes.button} ><ShoppingCartOutlinedIcon /></Button>
+                    <Button className={classes.button} onClick={handleAccount}><AccountCircleSharpIcon /></Button>
+                </Grid>
+            </Toolbar>
+        </AppBar>
     );
 }
