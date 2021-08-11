@@ -18,7 +18,7 @@ export default function Footer() {
         setIsModalOpened(!isModalOpened)
     }
     return (
-        <div position="static" style={{ background: '#9e9e9e' }}>
+        <footer position="static" style={{ background: '#9e9e9e' }}>
             <Grid container spacing={4} style={{ justifyContent: 'space-around', padding: '28px' }}>
                 <Grid item >
                     <Typography variant="body1" color="inherit" style={{ fontWeight: 'bold' }}>
@@ -52,6 +52,6 @@ export default function Footer() {
                     </Typography>
                 </Grid>
             </Grid>
-        </div>
+        </footer>
     )
 }

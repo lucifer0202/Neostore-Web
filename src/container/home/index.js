@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react'
-import { AppBar, Toolbar, IconButton, Typography, Grid, Paper, Button, Input } from '@material-ui/core'
+import {Typography, Grid, Paper, Button} from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles';
 import Logo from '../../assets/amazonLogo.jpg'
 import Image from '../../assets/image1.jpeg'

@@ -1,21 +1,21 @@
 import React, { useState } from 'react';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import { IconButton, Button, Grid } from '@material-ui/core';
-import Typography from '@material-ui/core/Typography';
-import InputBase from '@material-ui/core/InputBase';
-import { alpha, makeStyles } from '@material-ui/core/styles';
-import MenuIcon from '@material-ui/icons/Menu';
+import {AppBar,
+    Toolbar,
+    IconButton,
+    Button,
+    Grid,
+    InputBase,
+    makeStyles,
+    Tabs,
+    Tab,
+    alpha
+} from '@material-ui/core';
 import SearchIcon from '@material-ui/icons/Search';
 import ShoppingCartOutlinedIcon from '@material-ui/icons/ShoppingCartOutlined';
-import Paper from '@material-ui/core/Paper';
-import Tabs from '@material-ui/core/Tabs';
-import Tab from '@material-ui/core/Tab';
 import AccountCircleSharpIcon from '@material-ui/icons/AccountCircleSharp';
-import Logo from '../assets/amazonLogo.jpg'
-import Home from '../container/home';
-import Product from '../container/product';
-import Order from '../container/order';
+import Logo from '../../assets/amazonLogo.jpg'
+import { useHistory } from "react-router-dom";
+
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -100,12 +100,15 @@ export default function Header() {
     const classes = useStyles();
     const [tabIndex, setTabIndex] = useState(1);
     const [value, setValue] = useState(1)
+    const history = useHistory();
+
 
     const handleTabChange = (newTabIndex) => {
         setTabIndex(newTabIndex)
     }
     const handleAccount = () => {
-        
+        history.push("/signin");
+        console.log("----")
     }
     return (
         <AppBar positionFixed style={{ backgroundColor: 'black' }}>

@@ -2,9 +2,8 @@ import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
 import Backdrop from '@material-ui/core/Backdrop';
-import Fade from '@material-ui/core/Fade';
 import { Paper } from '@material-ui/core';
-import { Children } from 'react';
+import Fade from '@material-ui/core/Fade';
 
 const useStyles = makeStyles((theme) => ({
   modal: {
@@ -20,25 +19,16 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function MainModal() {
+export default function MainModal({open, toggleModal, children, style={} }) {
   const classes = useStyles();
-  const [open, setOpen] = React.useState(false);
-
-  const handleOpen = () => {
-    setOpen(true);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-  };
-
   return (
+    <div>
       <Modal
         aria-labelledby="transition-modal-title"
         aria-describedby="transition-modal-description"
         className={classes.modal}
         open={open}
-        onClose={handleClose}
+        onClose={toggleModal}
         closeAfterTransition
         BackdropComponent={Backdrop}
         BackdropProps={{
@@ -46,12 +36,9 @@ export default function MainModal() {
         }}
       >
         <Fade in={open}>
-          <Paper className={classes.paper}>
-            <h2 id="transition-modal-title">Transition modal</h2>
-            <p id="transition-modal-description">react-transition-group animates me.</p>
-            {Children}
-          </Paper>
+            {children}
         </Fade>
       </Modal>
+    </div>
   );
 }
