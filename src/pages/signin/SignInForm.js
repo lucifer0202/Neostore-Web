@@ -10,8 +10,6 @@ import { makeStyles } from '@material-ui/core/styles';
 import { useHistory } from "react-router-dom";
 // import FeedbackContext from '../context/feedbackContext';
 import './style.css'
-import PasswordModal from '../forgotpassword/ForgotPasswordForm'
-
 
 
 const useStyles = makeStyles((theme) => ({
@@ -25,20 +23,15 @@ const useStyles = makeStyles((theme) => ({
 
 }));
 
-export default function SignInForm({onSubmit}) {
+export default function SignInForm({ onSubmit, toggleModal }) {
     const classes = useStyles();
     const history = useHistory();
 
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('');
-    const [isModalOpened, setIsModalOpened] = useState(false)
 
     const [emailError, setEmailError] = useState(false)
     const [passwordError, setPasswordError] = useState(false)
-
-    const toggleModal = () => {
-        setIsModalOpened(!isModalOpened)
-    }
 
 
     const handleSubmit = () => {
@@ -74,78 +67,61 @@ export default function SignInForm({onSubmit}) {
     const handleSignup = () => {
         history.push("/signup")
     }
+
+
     return (
-        <div style={{ background: 'white' }}>
 
-            <div className="split left">
-                <Grid container spacing={3} className="centered" >
-                    <Grid item>
-                        <Button className='btn_link' color='primary' variant='contained'>Login with google</Button>
-                    </Grid>
-                    <Grid item>
-                        <Button className='btn_link' color='secondary' variant='contained'>Login with google</Button>
-                    </Grid>
-                    <Grid item>
-                        <Button className='btn_link' color='primary' variant='contained'>Login with google</Button>
-                    </Grid>
-                </Grid>
-            </div>
-
-            <div className="split right">
-                <div className="centered">
-                    <Paper
-                        variant="elevation"
-                        elevation={6}
-                        className={classes.paper}
-                    >
-                        <Grid container direction="column" spacing={2} style={{ margin: 'auto' }}>
-                            <Grid item>
-                                <TextField
-                                    label="Email"
-                                    error={emailError}
-                                    helperText={emailError ? "Incorrect Entry" : ""}
-                                    variant="outlined"
-                                    onChange={handleEmailInput}
-                                />
-                            </Grid>
-                            <Grid item>
-                                <TextField
-                                    label="Password"
-                                    error={passwordError}
-                                    helperText={passwordError ? "Incorrect Entry" : ""}
-                                    variant="outlined"
-                                    onChange={handlePasswordInput}
-                                />
-                            </Grid>
-                            <Grid item>
-                                <Button
-                                    variant="contained"
-                                    color="primary"
-                                    type="submit"
-                                    className="button-block"
-                                    onClick={handleSubmit}
-                                >
-                                    Login
-                                </Button>
-                            </Grid>
+        <div className="split right">
+            <div className="centered">
+                <Paper
+                    variant="elevation"
+                    elevation={6}
+                    className={classes.paper}
+                >
+                    <Grid container direction="column" spacing={2} style={{ margin: 'auto' }}>
+                        <Grid item>
+                            <TextField
+                                label="Email"
+                                error={emailError}
+                                helperText={emailError ? "Incorrect Entry" : ""}
+                                variant="outlined"
+                                onChange={handleEmailInput}
+                            />
                         </Grid>
                         <Grid item>
-                            <Link href="#" variant="body2" onClick={toggleModal}>
-                                Forgot Password?
-                            </Link>
-                            <div></div>
-                            <br />
-                            <div style={{ border: 'solid', color: '#c1c1c1' }}></div>
-                            <br />
-                            <Button variant='contained' onClick={handleSignup} style={{ background: 'greenyellow' }}>Register</Button>
+                            <TextField
+                                label="Password"
+                                error={passwordError}
+                                helperText={passwordError ? "Incorrect Entry" : ""}
+                                variant="outlined"
+                                onChange={handlePasswordInput}
+                            />
                         </Grid>
-                    </Paper>
-                    <PasswordModal
-                        toggleModal={toggleModal}
-                        isModalOpened={isModalOpened}
-                    />
-                </div>
+                        <Grid item>
+                            <Button
+                                variant="contained"
+                                color="primary"
+                                type="submit"
+                                className="button-block"
+                                onClick={handleSubmit}
+                            >
+                                Login
+                            </Button>
+                        </Grid>
+                    </Grid>
+                    <Grid item>
+                        <Link href="#" variant="body2" onClick={toggleModal}>
+                            Forgot Password?
+                        </Link>
+                        <div></div>
+                        <br />
+                        <div style={{ border: 'solid', color: '#c1c1c1' }}></div>
+                        <br />
+                        <Button variant='contained' onClick={handleSignup} style={{ background: 'greenyellow' }}>Register</Button>
+                    </Grid>
+                </Paper>
+
             </div>
-        </div >
+        </div>
     )
 }

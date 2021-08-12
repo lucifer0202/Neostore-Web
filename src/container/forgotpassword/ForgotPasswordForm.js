@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import MainModal from '../../component/mainModal'
 import {
     Button,
     TextField,
@@ -22,16 +21,15 @@ const useStyles = makeStyles((theme) => ({
         height: 'auto',
     },
 }));
-export default function ForgotPasswordForm({ toggleModal, isModalOpened, onSubmit }) {
+export default function ForgotPasswordForm({ onSubmit }) {
     const classes = useStyles();
     const [email, setEmail] = useState('')
     const [emailError, setEmailError] = useState(false)
     const handleSubmit = (event) => {
-        console.log("email", email, onSubmit)
         event.preventDefault()
-        // onSubmit({
-        //     email
-        // })
+        onSubmit({
+            email
+        })
     }
     const handleEmailInput = (event) => {
         if (/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(event.target.value)) {
@@ -47,28 +45,25 @@ export default function ForgotPasswordForm({ toggleModal, isModalOpened, onSubmi
 
     }
     return (
-        <MainModal
-            open={isModalOpened}
-            toggleModal={toggleModal}
-        >
-            <Paper elevation={3} >
-                <form className={classes.root} noValidate autoComplete="off" onSubmit={handleSubmit}>
 
-                    <Grid container sm spacing={2}>
-                        <Grid item xs={12}>
-                            Recover Password
-                        </Grid>
+        <Paper elevation={3} >
+            <form className={classes.root} noValidate autoComplete="off" onSubmit={handleSubmit}>
 
-                        <Grid item xs={12}>
-                            <TextField
-                                label="Email"
-                                error={emailError}
-                                helperText={emailError ? "Incorrect Entry" : ""}
-                                variant="outlined"
-                                onChange={handleEmailInput}
-                            />
-                        </Grid>
-                        {/* <Grid item justify='left' >
+                <Grid container sm spacing={2}>
+                    <Grid item xs={12}>
+                        Recover Password
+                    </Grid>
+
+                    <Grid item xs={12}>
+                        <TextField
+                            label="Email"
+                            error={emailError}
+                            helperText={emailError ? "Incorrect Entry" : ""}
+                            variant="outlined"
+                            onChange={handleEmailInput}
+                        />
+                    </Grid>
+                    {/* <Grid item justify='left' >
                         <TextField variant='outlined' placeholder='verification code'
                         style={{ width: '400px' }}
                         >
@@ -86,16 +81,15 @@ export default function ForgotPasswordForm({ toggleModal, isModalOpened, onSubmi
                         <TextField variant='outlined' placeholder='Confirm Password'
                         style={{ width: '400px' }}></TextField>
                     </Grid> */}
-                    </Grid>
+                </Grid>
 
-                    <Grid item xs={12}>
-                        <Button variant='contained' color='primary'
-                            type="submit"
-                            style={{ margin: '20px' }}
-                        > Submit</Button>
-                    </Grid>
-                </form>
-            </Paper>
-        </MainModal>
+                <Grid item xs={12}>
+                    <Button variant='contained' color='primary'
+                        type="submit"
+                        style={{ margin: '20px' }}
+                    > Submit</Button>
+                </Grid>
+            </form>
+        </Paper>
     )
 }

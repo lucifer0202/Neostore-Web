@@ -18,8 +18,9 @@ function App() {
           <Route path='/signin'  component={SignInPage}></Route>
           <Route path='/signup' component={SignUpPage} ></Route>
           
-          <Route path='/'  component={Home} ></Route>
+          <Route path='/home'  component={Home} ></Route>
           <Route path='/product' component={Product}></Route>
+          
           <Route path='/order' component={Order}></Route>
         </Switch>
       </div>
