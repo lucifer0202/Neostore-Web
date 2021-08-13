@@ -13,12 +13,12 @@ function App() {
     <>
       <BrowserRouter>
       <Header />
-      <div style={{height: '100vh',marginTop: '114px' }}>
+      <div style={{marginTop: '114px' }}>
         <Switch>
           <Route path='/signin'  component={SignInPage}></Route>
           <Route path='/signup' component={SignUpPage} ></Route>
           
-          <Route path='/home'  component={Home} ></Route>
+          <Route path='/' exact component={Home} ></Route>
           <Route path='/product' component={Product}></Route>
           
           <Route path='/order' component={Order}></Route>

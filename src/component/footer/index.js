@@ -4,21 +4,12 @@ import MainModal from '../mainModal'
 
 export default function Footer() {
 
-    // const [open, setOpen] = React.useState(false);
-
-    // const handleOpen = () => {
-    //     setOpen(true);
-    // };
-
-    // const handleClose = () => {
-    //     setOpen(false);
-    // };
     const [isModalOpened, setIsModalOpened] = useState(false)
     const toggleModal = () => {
         setIsModalOpened(!isModalOpened)
     }
     return (
-        <footer position="static" style={{ background: '#9e9e9e' }}>
+        <footer position="static" style={{ background: '#9e9e9e',marginTop: '137px',bottom: '0' }}>
             <Grid container spacing={4} style={{ justifyContent: 'space-around', padding: '28px' }}>
                 <Grid item >
                     <Typography variant="body1" color="inherit" style={{ fontWeight: 'bold' }}>

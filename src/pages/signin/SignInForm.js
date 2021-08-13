@@ -5,6 +5,7 @@ import {
     Grid,
     Paper,
     Link,
+    Divider,
 } from "@material-ui/core";
 import { makeStyles } from '@material-ui/core/styles';
 import { useHistory } from "react-router-dom";
@@ -100,7 +101,7 @@ export default function SignInForm({ onSubmit, toggleModal }) {
                         <Grid item>
                             <Button
                                 variant="contained"
-                                color="primary"
+                                style={{ backgroundColor: '#1877f2', color: 'white' }}
                                 type="submit"
                                 className="button-block"
                                 onClick={handleSubmit}
@@ -113,12 +114,10 @@ export default function SignInForm({ onSubmit, toggleModal }) {
                         <Link href="#" variant="body2" onClick={toggleModal}>
                             Forgot Password?
                         </Link>
-                        <div></div>
-                        <br />
-                        <div style={{ border: 'solid', color: '#c1c1c1' }}></div>
-                        <br />
-                        <Button variant='contained' onClick={handleSignup} style={{ background: 'greenyellow' }}>Register</Button>
                     </Grid>
+                    <Divider />
+                    <Button variant='contained' onClick={handleSignup} style={{ background: '#42b72a', color: 'white' }}>Register</Button>
+
                 </Paper>
 
             </div>

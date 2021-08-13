@@ -1,26 +1,39 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import './style.css'
-import { Grid, Typography, Paper } from '@material-ui/core'
+import { Grid, Button, Box } from '@material-ui/core'
+import Sidebar from './Sidebar'
+import List from './List'
+import { ProductService } from '../../services/productServices';
+import { useProductContext } from '../../contexts/ProductContext'
+
 
 export default function Product() {
+    const { productState, setProductState } = useProductContext();
+
+    const getAllProduct = async () => {
+        try {
+            setProductState({...productState, isLoading: true})
+            
+            const res = await ProductService.fetchProduct();
+            
+            if(res.data){
+                 setProductState({...res.data, isLoading: false});
+            }
+            console.log(res.data)
+
+            
+        } catch (e) {
+            console.log(e.message);
+        }
+    };
+
     return (
-        <Grid>
-            <Grid className="split_left" style={{ backgroundColor: '#e68c8c' }}>
-                <Grid container spacing={3}>
-                    <Grid item xs>
-                        <Paper>xs</Paper>
-                    </Grid>
-                    <Grid item xs>
-                        <Paper >xs</Paper>
-                    </Grid>
-                    <Grid item xs>
-                        <Paper>xs</Paper>
-                    </Grid>
-                </Grid>
+        <Grid container>
+            <Grid sm={2}>
+                <Sidebar getAllProduct={getAllProduct} />
             </Grid>
-
-            <Grid className="split_right">
-
+            <Grid sm={10}>
+                <List/>
             </Grid>
         </Grid>
     )
