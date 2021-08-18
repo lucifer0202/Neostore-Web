@@ -22,40 +22,10 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 
-const Star = ({ selected, onSelect }) => {
-    return <FaStar color={selected ? "red" : 'grey'}
-        onClick={onSelect} />
-}
-
-const CreateArray = (length) => [
-    ...Array(length)
-]
-const StarRating = ({ totalstar, }) => {
-    const [selectedStar, setSelectedStar] = useState(0)
-
-    return (
-        <>
-            {CreateArray(totalstar).map((n, i) => (
-
-                <Star
-                    key={i}
-                    selected={selectedStar > i}
-                    onSelect={() => setSelectedStar(i + 1)}
-                />
-            ))}
-
-            {/* <p>{selectedStar} out of {totalstar}</p> */}
-        </>
-    )
-
-}
 export default function Home() {
     const classes = useStyles();
     const history = useHistory();
 
-    const handleBackbutton = () => {
-        history.goBack()
-    }
 
     const cardArray = ['1', '2', '3', '4', '5', '6']
     return (
@@ -87,7 +57,7 @@ export default function Home() {
 
                                         </Grid>
                                         <Grid item>
-                                            <StarRating totalstar={5} />
+                                            <FaStar />
 
                                         </Grid>
                                     </Grid>

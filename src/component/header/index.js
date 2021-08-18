@@ -110,6 +110,10 @@ export default function Header() {
         history.push("/signin");
         console.log("----")
     }
+    const handleCartClick = () => {
+        history.push('/cartList')
+    }
+
     return (
         <AppBar positionFixed style={{ backgroundColor: 'black' }}>
             <Toolbar>
@@ -148,7 +152,7 @@ export default function Header() {
                         />
                     </div>
 
-                    <Button className={classes.button} ><ShoppingCartOutlinedIcon /></Button>
+                    <Button className={classes.button} onClick={handleCartClick} ><ShoppingCartOutlinedIcon /></Button>
                     <Button className={classes.button} onClick={handleAccount}><AccountCircleSharpIcon /></Button>
                 </Grid>
             </Toolbar>

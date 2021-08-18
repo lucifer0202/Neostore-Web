@@ -1,0 +1,11 @@
+.footer {
+
+    margin: auto;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    background-color: cadetblue;
+    color: rgb(43, 37, 37);
+    justify-content: space-around;
+    padding: 28px
+ }

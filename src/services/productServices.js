@@ -1,9 +1,9 @@
 // import { Storage } from '../utils/Storage';
 import axios from 'axios'
 
-const fetchProduct = async (productInput) => {
+const AllProductApi = async (queryString = "") => {
     try {
-        const resp = await axios.get('/api/product')       
+        const resp = await axios.get(`/api/product?${queryString}`)       
         return resp.data
     }
     catch (error) {
@@ -12,6 +12,7 @@ const fetchProduct = async (productInput) => {
 }
 
 
+
 export const ProductService = {
-    fetchProduct
+    AllProductApi,
 }

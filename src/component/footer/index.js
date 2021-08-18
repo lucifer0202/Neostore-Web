@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { Container, Grid, Typography, Button } from '@material-ui/core';
 import MainModal from '../mainModal'
+import './style.css'
 
 export default function Footer() {
 
@@ -9,8 +10,14 @@ export default function Footer() {
         setIsModalOpened(!isModalOpened)
     }
     return (
-        <footer position="static" style={{ background: '#9e9e9e',marginTop: '137px',bottom: '0' }}>
-            <Grid container spacing={4} style={{ justifyContent: 'space-around', padding: '28px' }}>
+        <>
+            {isModalOpened &&
+                <MainModal
+                    toggleModal={toggleModal}
+                    isModalOpened={isModalOpened}
+                />
+            }
+            <Grid container spacing={4} className='footer'>
                 <Grid item >
                     <Typography variant="body1" color="inherit" style={{ fontWeight: 'bold' }}>
                         About Company
@@ -24,14 +31,10 @@ export default function Footer() {
                             target="_blank">Locate Us</a>
                     </Typography>
                     <Typography variant="body1" color="inherit" style={{ margin: 'revert', cursor: 'pointer' }} onClick={toggleModal}>
-                     <a>Subscription</a>   
+                        <a>Subscription</a>
                     </Typography>
 
                 </Grid>
-                <MainModal
-                    toggleModal={toggleModal}
-                    isModalOpened={isModalOpened}
-                />
                 <Grid item>
                     <Typography variant="body1" color="inherit" style={{ fontWeight: 'bold' }}>
                         Information
@@ -43,6 +46,6 @@ export default function Footer() {
                     </Typography>
                 </Grid>
             </Grid>
-        </footer>
+        </>
     )
 }
