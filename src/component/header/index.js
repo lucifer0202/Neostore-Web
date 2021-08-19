@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import {AppBar,
+import {
+    AppBar,
     Toolbar,
     IconButton,
     Button,
@@ -15,7 +16,13 @@ import ShoppingCartOutlinedIcon from '@material-ui/icons/ShoppingCartOutlined';
 import AccountCircleSharpIcon from '@material-ui/icons/AccountCircleSharp';
 import Logo from '../../assets/amazonLogo.jpg'
 import { useHistory } from "react-router-dom";
+import { useAuthContext } from '../../contexts/AuthContext';
+import Popover from '@material-ui/core/Popover';
 
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemText from '@material-ui/core/ListItemText';
+import Divider from '@material-ui/core/Divider';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -101,17 +108,41 @@ export default function Header() {
     const [tabIndex, setTabIndex] = useState(1);
     const [value, setValue] = useState(1)
     const history = useHistory();
+    const { authState } = useAuthContext()
+
+    const [anchorEl, setAnchorEl] = React.useState(null);
+
+    const handleClick = (event) => {
+        setAnchorEl(event.currentTarget);
+    };
+
+    const handleClose = () => {
+        setAnchorEl(null);
+    };
+
+    const open = Boolean(anchorEl);
+    const id = open ? 'simple-popover' : undefined;
 
 
     const handleTabChange = (newTabIndex) => {
         setTabIndex(newTabIndex)
     }
     const handleAccount = () => {
-        history.push("/signin");
-        console.log("----")
+        if (authState === null) {
+            history.push('/signin')
+        }
+        else {
+            history.push("/myAccount")
+        }
+        console.log("authState", authState)
     }
     const handleCartClick = () => {
-        history.push('/cartList')
+        if (authState.user) {
+            history.push('/cartList')
+        }
+        else {
+            history.push(`/signin?ref=cartList`)
+        }
     }
 
     return (
@@ -152,8 +183,55 @@ export default function Header() {
                         />
                     </div>
 
-                    <Button className={classes.button} onClick={handleCartClick} ><ShoppingCartOutlinedIcon /></Button>
-                    <Button className={classes.button} onClick={handleAccount}><AccountCircleSharpIcon /></Button>
+                    <Button className={classes.button} onClick={handleCartClick} >
+                        <ShoppingCartOutlinedIcon />
+                    </Button>
+
+                    <Button
+                        className={classes.button}
+                        aria-describedby={id}
+                        onClick={handleClick}
+                    // onClick={handleAccount}
+                    >
+                        <AccountCircleSharpIcon />
+                    </Button>
+
+                    <Popover
+                        id={id}
+                        open={open}
+                        anchorEl={anchorEl}
+                        onClose={handleClose}
+                        anchorOrigin={{
+                            vertical: 'bottom',
+                            horizontal: 'center',
+                        }}
+                        transformOrigin={{
+                            vertical: 'top',
+                            horizontal: 'center',
+                        }}
+                    >
+                        <List component="nav" aria-label="main mailbox folders">
+                            {authState.user ? <>
+                                <ListItem button>
+                                    <ListItemText primary="Account" />
+                                </ListItem>
+
+                                <Divider />
+                                <ListItem button>
+                                    <ListItemText primary="Profile" />
+                                </ListItem>
+
+                                <Divider />
+                                <ListItem button>
+                                    <ListItemText primary="Logout" onClick={() => history.push('/signin')} />
+                                </ListItem>
+                            </> :
+                                <ListItem button>
+                                    <ListItemText primary="Log In" onClick={() => history.push('/signin')} />
+                                </ListItem>
+                            }
+                        </List>
+                    </Popover>
                 </Grid>
             </Toolbar>
         </AppBar>

@@ -7,15 +7,24 @@ import { AuthService } from '../../services/authServices'
 import SignInForm from './SignInForm';
 import SocialLogin from './SocialLogin';
 import PasswordModal from '../../container/forgotpassword/ForgotPasswordModal'
+import { useQuery } from '../../utils/customHooks';
+import Loader from '../../component/Loader';
 
 const SignInPage = () => {
   const history = useHistory();
   const { authState, setAuthState } = useAuthContext();
   const [signInError, setSignInError] = useState(false)
   const [isModalOpened, setIsModalOpened] = useState(false)
+  const query = useQuery();
+  const [isLoading,setIsLoading] = useState(false);
 
   const navigateToSignInRedirect = useCallback(() => {
-    history.replace('/')
+    if(query.get('ref')){
+      history.replace(`/${query.get('ref')}`)
+    }else{
+      history.replace('/')
+    }
+
     // navigate(AuthService.getSignInRedirectPath());
     // AuthService.removeSignInRedirectPath();
   }, [history]);
@@ -29,12 +38,15 @@ const SignInPage = () => {
   }, [authState.user, navigateToSignInRedirect]);
 
 
-  const handleSubmit = (signInInput) => {
+  const handleSubmit = async (signInInput) => {
     try {
-      const user = AuthService.signIn(signInInput);
+      setIsLoading(true);
+      const user = await AuthService.signIn(signInInput);
       setAuthState({ ...authState, user });
+      setIsLoading(false);
       navigateToSignInRedirect();
     } catch (e) {
+      setIsLoading(false);
       setSignInError(e.message);
     }
   };
@@ -46,6 +58,7 @@ const SignInPage = () => {
 
   return (
     <>
+    <Loader isLoading={isLoading}/> 
       <Grid container>
         <Grid sm={5}>
           <SocialLogin />

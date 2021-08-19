@@ -62,7 +62,8 @@ export default function SignInForm({ onSubmit, toggleModal }) {
     const [passwordError, setPasswordError] = useState(false)
 
 
-    const handleSubmit = () => {
+    const handleSubmit = (event) => {
+        event.preventDefault()
         onSubmit({
             email, password
         })
@@ -91,8 +92,6 @@ export default function SignInForm({ onSubmit, toggleModal }) {
     const handleSignup = () => {
         history.push("/signup")
     }
-
-
 
     return (
         <Paper
