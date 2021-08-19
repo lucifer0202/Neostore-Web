@@ -10,9 +10,9 @@ import { useProductContext } from '../../contexts/ProductContext'
 export default function List({ }) {
     const history = useHistory()
 
-    const [list, setList] = React.useState([]);
+    const [list, setList] = React.useState([{}]);
 
-    const { productState, categoryState } = useProductContext();
+    const { productState } = useProductContext();
 
     React.useEffect(() => {
         if (productState.docs) {
@@ -20,19 +20,21 @@ export default function List({ }) {
         }
     }, [productState.docs])
 
-    const handleCardClick = () => {
-        history.push('/productDetail')
+    const handleCardClick = (itemId) => {
+        history.push(`/productDetail?product=${itemId}`)
+    }
+    const addToCart = () => {
+        history.push('/cart')
     }
 
     return (
-        <>
             <Grid container spacing={3} style={{padding: '20px'}}>
 
                 {
                     list.map(item => {
                         return (
                             <Grid item key={item.id}>
-                                <Paper elevation={15} style={{ height: '386px' }} onClick = {handleCardClick} >
+                                <Paper elevation={15} style={{ height: '386px', cursor:'pointer' }} onClick = {() => handleCardClick(item.id)} >
                                     <img style={{
                                         width: '93%',
                                         height: " 166px",
@@ -46,7 +48,7 @@ export default function List({ }) {
                                             <Typography >{item.price} <BiRupee /></Typography>
                                         </Grid>
                                         <Grid item>
-                                            <Button variant='contained' color='secondary'> Add To Cart</Button>
+                                            <Button variant='contained' color='secondary' onClick={addToCart}> Add To Cart</Button>
 
                                         </Grid>
                                         <Grid item>
@@ -63,6 +65,6 @@ export default function List({ }) {
                     })
                 }
             </Grid>
-        </>
+    
     )
 }

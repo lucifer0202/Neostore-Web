@@ -3,13 +3,26 @@ import {
     Button,
     TextField,
     Grid,
-    Paper,
+    makeStyles,
     Link,
 } from "@material-ui/core";
+
+const useStyles = makeStyles((theme) => ({
+    root: {
+        display: 'flex',
+        flexWrap: 'wrap',
+    },
+   container:{
+       justifyContent: 'center',
+       padding: 99
+   }
+}));
+
 export default function SocialLogin() {
+    const classes = useStyles();
+
     return (
-        <div className="split left">
-            <Grid container spacing={3} className="centered" >
+            <Grid container spacing={3} className={classes.container}>
                 <Grid item>
                     <Button className='btn_link' color='primary' variant='contained'>Login with google</Button>
                 </Grid>
@@ -20,6 +33,5 @@ export default function SocialLogin() {
                     <Button className='btn_link' color='primary' variant='contained'>Login with google</Button>
                 </Grid>
             </Grid>
-        </div>
     )
 }

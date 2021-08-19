@@ -1,4 +1,4 @@
-import './App.css';
+// import './App.css';
 import Header from './component/header/index';
 import Footer from './component/footer';
 import Home from './container/home';
@@ -9,13 +9,14 @@ import SignUpPage from './pages/signup/signupPage';
 import Product from './pages/product';
 import ProductDetail from './pages/productDetail'
 import CartDetail from './pages/cartDetail'
+import MyAccount from './pages/myAccount';
 
 function App() {
   return (
     <>
       <BrowserRouter>
       <Header />
-      <div style={{marginTop: '114px',marginBottom: '114px',marginLeft: '40px' }}>
+      <div style={{marginTop: '114px',marginBottom: '114px',marginLeft: '40px' ,}}>
         <Switch>
           <Route path='/signin'  component={SignInPage}></Route>
           <Route path='/signup' component={SignUpPage} ></Route>
@@ -26,6 +27,7 @@ function App() {
           <Route path='/cartList' component={CartDetail}></Route>
           
           <Route path='/order' component={Order}></Route>
+          <Route path='/myAccount' component={MyAccount} />
         </Switch>
       </div>
       </BrowserRouter>

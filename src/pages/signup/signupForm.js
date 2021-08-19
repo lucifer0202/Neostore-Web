@@ -56,7 +56,7 @@ export default function SignUpForm({ onSubmit }) {
 
     const handleSubmit = () => {
         onSubmit({
-            email, firstName, lastName, password, confirm_password,mobile ,gender
+            email, firstName, lastName, password, confirm_password, mobile, gender
         })
     }
     const handleFirstNameInput = (e) => {
@@ -124,11 +124,11 @@ export default function SignUpForm({ onSubmit }) {
         setMobile(event.target.value)
     }
     const handleButton = () => {
-        history.push('/login')
+        history.push('/signin')
     }
     return (
         <Paper elevation={3} className={classes.paper}>
-            <FormControl>
+            <form onSubmit={handleSubmit}>
                 <Grid container direction={"column"} spacing={2}>
                     <Grid item>
                         <Typography style={{ fontWeight: 'bold', color: "cadetblue" }}>Register to neoSTORE</Typography>
@@ -208,7 +208,7 @@ export default function SignUpForm({ onSubmit }) {
                     Register
                 </Button>
                 <button onClick={handleButton}> Login</button>
-            </FormControl>
+            </form>
 
         </Paper >
     )

@@ -1,6 +1,7 @@
 import React, { useCallback, useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useAuthContext } from '../../contexts/AuthContext';
+import { Grid, Button, Paper, Typography } from '@material-ui/core'
 
 import { AuthService } from '../../services/authServices'
 import SignInForm from './SignInForm';
@@ -14,7 +15,7 @@ const SignInPage = () => {
   const [isModalOpened, setIsModalOpened] = useState(false)
 
   const navigateToSignInRedirect = useCallback(() => {
-    history.replace('/home')
+    history.replace('/')
     // navigate(AuthService.getSignInRedirectPath());
     // AuthService.removeSignInRedirectPath();
   }, [history]);
@@ -44,16 +45,24 @@ const SignInPage = () => {
 
 
   return (
-    <div style={{ background: 'white' }}>
-      <SocialLogin />
-      <SignInForm toggleModal={toggleModal}
-        signInError={signInError} onSubmit={handleSubmit} />
-      <PasswordModal
+    <>
+      <Grid container>
+        <Grid sm={5}>
+          <SocialLogin />
+        </Grid>
+        <Grid sm={7}>
+          <SignInForm toggleModal={toggleModal}
+            signInError={signInError} onSubmit={handleSubmit} />
+        </Grid>
+      </Grid>
+      {isModalOpened && <PasswordModal
         toggleModal={toggleModal}
         isModalOpened={isModalOpened}
 
-      />
-    </div >
+      />}
+    </>
+
+
   );
 }
 export default SignInPage

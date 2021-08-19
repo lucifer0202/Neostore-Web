@@ -7,19 +7,46 @@ import {
     Link,
     Divider,
 } from "@material-ui/core";
+import clsx from 'clsx';
+
 import { makeStyles } from '@material-ui/core/styles';
 import { useHistory } from "react-router-dom";
+import IconButton from '@material-ui/core/IconButton';
+import Input from '@material-ui/core/Input';
+import FilledInput from '@material-ui/core/FilledInput';
+import OutlinedInput from '@material-ui/core/OutlinedInput';
+import InputLabel from '@material-ui/core/InputLabel';
+import InputAdornment from '@material-ui/core/InputAdornment';
+import FormControl from '@material-ui/core/FormControl';
+import Visibility from '@material-ui/icons/Visibility';
+import VisibilityOff from '@material-ui/icons/VisibilityOff';
 // import FeedbackContext from '../context/feedbackContext';
 import './style.css'
 
 
 const useStyles = makeStyles((theme) => ({
+    root: {
+        display: 'flex',
+        flexWrap: 'wrap',
+    },
     paper: {
         width: '400px',
         margin: 'auto ',
         display: 'grid',
         height: '20rem'
     },
+    margin: {
+        margin: theme.spacing(1),
+    },
+    withoutLabel: {
+        marginTop: theme.spacing(3),
+    },
+    textField: {
+        width: '30ch',
+    },
+    form: {
+        padding: '28px'
+    }
 
 
 }));
@@ -61,66 +88,57 @@ export default function SignInForm({ onSubmit, toggleModal }) {
         setPassword(event.target.value)
     }
 
-    const handleLogin = (e) => {
-
-        history.push("/dashboard");
-    }
     const handleSignup = () => {
         history.push("/signup")
     }
 
 
-    return (
 
-        <div className="split right">
-            <div className="centered">
-                <Paper
-                    variant="elevation"
-                    elevation={6}
-                    className={classes.paper}
-                >
-                    <Grid container direction="column" spacing={2} style={{ margin: 'auto' }}>
-                        <Grid item>
-                            <TextField
-                                label="Email"
-                                error={emailError}
-                                helperText={emailError ? "Incorrect Entry" : ""}
-                                variant="outlined"
-                                onChange={handleEmailInput}
-                            />
-                        </Grid>
-                        <Grid item>
-                            <TextField
-                                label="Password"
-                                error={passwordError}
-                                helperText={passwordError ? "Incorrect Entry" : ""}
-                                variant="outlined"
-                                onChange={handlePasswordInput}
-                            />
-                        </Grid>
-                        <Grid item>
-                            <Button
-                                variant="contained"
-                                style={{ backgroundColor: '#1877f2', color: 'white' }}
-                                type="submit"
-                                className="button-block"
-                                onClick={handleSubmit}
-                            >
-                                Login
-                            </Button>
-                        </Grid>
+    return (
+        <Paper
+            elevation={6}
+            className={classes.paper}
+        >
+            <form onSubmit={handleSubmit} className={classes.form}>
+                <Grid container direction="column" spacing={2} style={{ margin: 'auto' }}>
+                    <Grid item>
+                        <TextField
+                            label="Email"
+                            error={emailError}
+                            helperText={emailError ? "Incorrect Entry" : ""}
+                            variant="outlined"
+                            onChange={handleEmailInput}
+                        />
                     </Grid>
                     <Grid item>
-                        <Link href="#" variant="body2" onClick={toggleModal}>
-                            Forgot Password?
-                        </Link>
+                        <TextField
+                            label="Password"
+                            error={passwordError}
+                            helperText={passwordError ? "Incorrect Entry" : ""}
+                            variant="outlined"
+                            onChange={handlePasswordInput}
+                        />
                     </Grid>
-                    <Divider />
-                    <Button variant='contained' onClick={handleSignup} style={{ background: '#42b72a', color: 'white' }}>Register</Button>
-
-                </Paper>
-
-            </div>
-        </div>
+                    <Grid item>
+                        <Button
+                            variant="contained"
+                            style={{ backgroundColor: '#1877f2', color: 'white' }}
+                            type="submit"
+                            className="button-block"
+                            onClick={handleSubmit}
+                        >
+                            Login
+                        </Button>
+                    </Grid>
+                </Grid>
+                <Grid item>
+                    <Link href="#" variant="body2" onClick={toggleModal}>
+                        Forgot Password?
+                    </Link>
+                </Grid>
+                <Divider />
+                <Button variant='contained' onClick={handleSignup} style={{ background: '#42b72a', color: 'white' }}>Register</Button>
+            </form>
+        </Paper>
     )
 }

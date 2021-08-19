@@ -47,7 +47,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-export default function DescriptionTab() {
+export default function DescriptionTab({ description, features }) {
     const classes = useStyles();
     const [value, setValue] = React.useState(0);
 
@@ -62,10 +62,10 @@ export default function DescriptionTab() {
                 <Tab label="Feature" {...a11yProps(1)} />
             </Tabs>
             <TabPanel value={value} index={0}>
-                Item One,f
+                {description}
             </TabPanel>
             <TabPanel value={value} index={1}>
-                Item Two
+                {features}
             </TabPanel>
 
         </div>

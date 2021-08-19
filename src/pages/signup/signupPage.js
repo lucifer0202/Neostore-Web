@@ -40,17 +40,6 @@ const SignUpPage = () => {
     return (
         <>
             <Grid style={{display: 'flex' , justifyContent: 'center'}} >
-                {/* <Grid container spacing={3} className="centered" >
-                <Grid item>
-                    <Button className='btn_link' color='primary' variant='contained' endIcon={<FacebookIcon />}>Login with Facebook</Button>
-                </Grid>
-                <Grid item>
-                    <Button className='btn_link' color='secondary' variant='contained'>Login with google</Button>
-                </Grid>
-                <Grid item>
-                    <Button className='btn_link' color='primary' variant='contained'>Login with google</Button>
-                </Grid>
-            </Grid> */}
                 <SignUpForm signUpError={signUpError} onSubmit={handleSubmit} />
             </Grid>
         </>
