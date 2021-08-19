@@ -15,6 +15,7 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 import ListItemText from '@material-ui/core/ListItemText';
+import { CartServices } from '../../services/cardServices'
 
 const useStyles = makeStyles({
     root: {
@@ -23,9 +24,6 @@ const useStyles = makeStyles({
     },
     table: {
         minWidth: 479,
-    },
-    btn: {
-        width: '481px'
     }
 });
 
@@ -45,12 +43,13 @@ const rows = [
 
 export default function CartDetail() {
     const classes = useStyles();
+    const [list, setList] = useState([])
 
     useEffect(() => {
-        axios.get('/api/cart') //promise  
-
+        CartServices.getCartApi()
             .then(resp => {
-                console.log("Cart Details", resp)
+                console.log("Cart Details", resp.data.products)
+                setList(resp.data.products)
 
             })
             .catch(error => {
@@ -66,9 +65,9 @@ export default function CartDetail() {
 
                 <h4>Delivered</h4>
             </div>
-            <Grid container >
-                <Grid sm={7}>
-                    <Paper style={{ width: '90%' }}>
+            <Grid container spacing={2}>
+                <Grid xs={6}>
+                    <Paper>
                         <TableContainer component={Paper}>
                             <Table className={classes.table} aria-label="simple table">
                                 <TableHead>
@@ -77,23 +76,22 @@ export default function CartDetail() {
                                         <TableCell align="right">Quantity</TableCell>
                                         <TableCell align="right">Price&nbsp;</TableCell>
                                         <TableCell align="right">Total&nbsp;</TableCell>
-                                        {/* <TableCell align="right">Protein&nbsp;(g)</TableCell> */}
                                     </TableRow>
                                 </TableHead>
                                 <TableBody>
-                                    {rows.map((row) => (
-                                        <TableRow key={row.name}>
+                                {list.map((row) => (
+                                        <TableRow key={row.productId}>
                                             <TableCell component="th" scope="row" style={{ display: 'flex' }}>
                                                 <Grid container spacing={2}>
                                                     <Grid item>
-                                                        <img style={{ width: '85px' }} src={Logo} />
+                                                    <img style={{ width: '85px' }} src={row.productId.mainImage} />
                                                     </Grid>
                                                     <Grid item style={{ display: 'block' }}>
                                                         <div>
-                                                            {row.name}
+                                                          {row.productId.name}
                                                         </div>
                                                         <div>
-                                                            By: {row.name}
+                                                            By: 
                                                         </div>
                                                         <div>
                                                             Status:  {row.name}
@@ -101,9 +99,9 @@ export default function CartDetail() {
                                                     </Grid>
                                                 </Grid>
                                             </TableCell>
-                                            <TableCell align="right">{row.calories}</TableCell>
-                                            <TableCell align="right">{row.fat}</TableCell>
-                                            <TableCell align="right">{row.carbs}</TableCell>
+                                            <TableCell align="right">{row.quantity}</TableCell>
+                                            <TableCell align="right">{row.productId.price}</TableCell>
+                                            <TableCell align="right">{row.totalAmount}</TableCell>
                                             <TableCell align="right"> <IconButton><DeleteOutlineIcon /></IconButton></TableCell>
                                         </TableRow>
                                     ))}
@@ -112,10 +110,10 @@ export default function CartDetail() {
                         </TableContainer>
                     </Paper>
                 </Grid>
-                <Grid sm={5}>
-                    <Paper elevation={6} style={{ width: '90%' }}>
+                <Grid xs={6}>
+                    <Paper elevation={6} style={{ display: 'flex', justifyContent: 'center', flexDirection: 'column', padding: '10px' }}>
 
-                        <h1 style={{ textAligh: 'center' }}>Review Order</h1>
+                        <h4 style={{ textAligh: 'center' }}>Review Order</h4>
                         <Divider />
                         <List dense className={classes.root}>
                             {[0, 1, 2, 3].map((value) => {
@@ -130,8 +128,8 @@ export default function CartDetail() {
                                     </ListItem>
                                 );
                             })}
-                            <Button variant='contained' color='primary' className={classes.btn} >Proceed To Buy</Button>
                         </List>
+                        <Button variant='contained' color='primary' >Proceed To Buy</Button>
 
                     </Paper>
                 </Grid>

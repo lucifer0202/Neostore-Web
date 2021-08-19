@@ -33,7 +33,13 @@ function set(key, value) {
 function get(key, defaultValue){
   if (isEnabled) {
     const item = localStorage.getItem(key);
-    return item !== null ? JSON.parse(item) : defaultValue;
+    console.log('object',item)
+    try{
+      return item !== null ? JSON.parse(item) : defaultValue;
+    }
+    catch(error){
+      return item;
+    }
   } else {
     /* istanbul ignore next */
     return defaultValue;

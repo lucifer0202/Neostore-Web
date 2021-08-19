@@ -27,8 +27,8 @@ const useStyles = makeStyles((theme) => ({
         paddingLeft: theme.spacing(4),
     },
     large: {
-        width: 345,
-        height: 343,
+        width: 100,
+        height: 100,
         margin: 'auto'
     },
     paper: {
@@ -80,7 +80,7 @@ export default function MyAccount() {
         <>
             <h2>My Accounts</h2>
             <Divider />
-            <Grid container spacing={3} className={classes.container}>
+            <Grid container spacing={2} className={classes.container}>
                 <Grid sm={4}>
                     <Paper elevation={6} className={classes.paper}>
                         <Grid container spacing={2} style={{ justifyContent: 'center' }}>

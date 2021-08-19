@@ -8,12 +8,14 @@ import { AiFillGoogleCircle } from 'react-icons/ai';
 import TwitterIcon from '@material-ui/icons/Twitter';
 import DescriptionTab from './DescriptionTab'
 import { useHistory } from 'react-router';
+import axios from 'axios';
 
 import { Paper, Grid, Divider, Button } from '@material-ui/core';
 import Logo from '../../assets/image4.png'
 import './style.css'
 import { useProductContext } from '../../contexts/ProductContext';
 import { useQuery } from '../../utils/customHooks';
+import { useAuthContext } from '../../contexts/AuthContext';
 
 export default function ProductDetail() {
 
@@ -21,6 +23,7 @@ export default function ProductDetail() {
     const [value, setValue] = React.useState(2);
     const { productState } = useProductContext();
     const [productValue, setProductValue] = useState({});
+    const { authState } = useAuthContext()
 
     const query = useQuery();
 
@@ -32,8 +35,26 @@ export default function ProductDetail() {
         }
     }, [query, productState.docs])
 
-    const addCart = () => {
-        history.push('/cartList')
+    useEffect(() => {
+        if (authState.user) {
+            axios.get('/api/cart') 
+                .then(resp => {
+                    console.log("Cart Details", resp.data)
+
+                })
+                .catch(error => {
+                    console.error(error);
+                })
+        }
+
+    }, [authState.user])
+    const handleCartClick = () => {
+        if (authState.user) {
+            history.push('/cartList')
+        }
+        else {
+            history.push(`/signin?ref=cartList`)
+        }
     }
 
 
@@ -69,7 +90,7 @@ export default function ProductDetail() {
                                 <Button><AiFillGoogleCircle /></Button>
                             </Grid>
                             <Grid item style={{ marginTop: '20px', display: 'flex', justifyContent: 'space-evenly' }}>
-                                <Button variant="contained" color="primary" onClick={addCart}>
+                                <Button variant="contained" color="primary" onClick={handleCartClick}>
                                     Add to card
                                 </Button>
                                 <Button variant="contained" color="secondary">

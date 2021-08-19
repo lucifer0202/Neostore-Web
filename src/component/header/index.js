@@ -23,6 +23,7 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import Divider from '@material-ui/core/Divider';
+import { AuthService } from '../../services/authServices';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -108,7 +109,7 @@ export default function Header() {
     const [tabIndex, setTabIndex] = useState(1);
     const [value, setValue] = useState(1)
     const history = useHistory();
-    const { authState } = useAuthContext()
+    const { authState, setAuthState } = useAuthContext()
 
     const [anchorEl, setAnchorEl] = React.useState(null);
 
@@ -127,17 +128,18 @@ export default function Header() {
     const handleTabChange = (newTabIndex) => {
         setTabIndex(newTabIndex)
     }
-    const handleAccount = () => {
-        if (authState === null) {
-            history.push('/signin')
-        }
-        else {
-            history.push("/myAccount")
-        }
-        console.log("authState", authState)
-    }
+    // const handleAccount = () => {
+    //     if (authState === null) {
+    //         history.push('/signin')
+    //     }
+    //     else {
+    //         history.push("/myAccount")
+    //     }
+    //     console.log("authState", authState)
+    // }
     const handleCartClick = () => {
-        if (authState.user) {
+        console.log(AuthService.getAccessToken())
+        if (AuthService.getAccessToken()) {
             history.push('/cartList')
         }
         else {
@@ -211,23 +213,30 @@ export default function Header() {
                         }}
                     >
                         <List component="nav" aria-label="main mailbox folders">
-                            {authState.user ? <>
+                            {AuthService.getAccessToken() ? <>
                                 <ListItem button>
-                                    <ListItemText primary="Account" />
+                                    <ListItemText primary="Account" 
+                                    onClick={() => {
+                                        handleClose();
+                                        history.push('/myAccount')
+                                    }}  />
                                 </ListItem>
 
                                 <Divider />
                                 <ListItem button>
-                                    <ListItemText primary="Profile" />
-                                </ListItem>
-
-                                <Divider />
-                                <ListItem button>
-                                    <ListItemText primary="Logout" onClick={() => history.push('/signin')} />
+                                    <ListItemText primary="Logout" onClick={() => {
+                                        setAuthState({});
+                                        handleClose();
+                                        history.push('/signin')
+                                    }} />
                                 </ListItem>
                             </> :
                                 <ListItem button>
-                                    <ListItemText primary="Log In" onClick={() => history.push('/signin')} />
+                                    <ListItemText primary="Log In" onClick={() => {
+                                        handleClose();
+                                        AuthService.logout();
+                                        history.push('/signin')
+                                    }} />
                                 </ListItem>
                             }
                         </List>

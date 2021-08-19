@@ -32,49 +32,48 @@ const useStyles = makeStyles((theme) => ({
 export default function Profile() {
     const classes = useStyles();
     const { authState } = useAuthContext();
-
-    console.log(authState)
+    console.log(authState.user)
     return (
         <Paper elevation={6} className={classes.paper2} >
             <Grid className={classes.grid}>
                 <h1 className={classes.h1}>Profile</h1>
                 <Divider />
-                <Grid container spacing={8} style={{ padding: '20px' }}>
+                <Grid container spacing={2} style={{ padding: '20px' }}>
 
-                    <Grid item sm={4}>
+                    <Grid item xs={4}>
                         First Name
                     </Grid>
-                    <Grid item sm={8}>
-                        {/* {authState.firstName} */}
+                    <Grid item xs={8}>
+                        {authState.user.firstName}
                     </Grid>
-                    <Grid item sm={4}>
+                    <Grid item xs={4}>
                         Last Name
                     </Grid>
-                    <Grid item sm={8}>
-
+                    <Grid item xs={8}>
+                    {authState.user.lastName}
                     </Grid>
-                    <Grid item sm={4}>
+                    <Grid item xs={4}>
                         Gender
                     </Grid>
-                    <Grid item sm={8}>
+                    <Grid item xs={8}>
 
                     </Grid>
-                    <Grid item sm={4}>
+                    <Grid item xs={4}>
                         Date of Birth
                     </Grid>
-                    <Grid item sm={8}>
+                    <Grid item xs={8}>
 
                     </Grid>
-                    <Grid item sm={4}>
+                    <Grid item xs={4}>
                         Mobile Number
                     </Grid>
-                    <Grid item sm={8}>
+                    <Grid item xs={8}>
 
                     </Grid>
-                    <Grid item sm={4}>
+                    <Grid item xs={4}>
                         Email ID
                     </Grid>
-                    <Grid item sm={8}>
+                    <Grid item xs={8}>
                         {authState.email}
                     </Grid>
 

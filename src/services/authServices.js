@@ -10,6 +10,7 @@ const getAccessToken = () => {
 };
 
 const setAccessToken = (accessToken) => {
+  console.log('--', accessToken)
   return Storage.set(TOKEN_KEY, accessToken);
 };
 
@@ -44,9 +45,9 @@ const removeSignInRedirectPath = () => {
 const signIn = async (signInInput) => {
   try {
     const resp = await axios.post('/api/auth/login', signInInput);
-    
-    const { token ,data} = resp.data;
-    setAccessToken(token)
+
+    const { data } = resp.data;
+    setAccessToken(data.token)
     return data;
   } catch (e) {
     console.log('Error', e)
@@ -57,9 +58,10 @@ const signIn = async (signInInput) => {
 const signUp = async (signUpInput) => {
   try {
     const resp = await axios.post('/api/auth/register', signUpInput);
+
+    const { data } = resp.data;
     
-    const { token,data } = resp.data;
-    setAccessToken(token)
+    setAccessToken(data.token)
 
     return data
   } catch (e) {
@@ -69,16 +71,22 @@ const signUp = async (signUpInput) => {
 const forgotPassword = async (forgotPasswordInput) => {
   try {
     const resp = await axios.post('/api/auth/forgot-password', forgotPasswordInput);
-    
+
     console.log("response", resp)
-    
+
     return resp.data;
   } catch (e) {
     console.log('Error', e)
   }
 }
+
+const logout = () =>{
+  removeAccessToken()
+}
 export const AuthService = {
   signUp,
   signIn,
-  forgotPassword
+  forgotPassword,
+  getAccessToken,
+  logout
 }
