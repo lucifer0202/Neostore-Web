@@ -8,7 +8,6 @@ import { useProductContext } from '../../contexts/ProductContext'
 import { useQuery } from '../../utils/customHooks'
 import PaginationList from './Pagination'
 
-
 export default function Product() {
     const { productState, setProductState } = useProductContext();
     const [isLoading, setIsLoading] = useState(false)

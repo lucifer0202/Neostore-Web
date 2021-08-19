@@ -1,7 +1,7 @@
 // import './App.css';
 import Header from './component/header/index';
 import Footer from './component/footer';
-import Home from './container/home';
+import Home from './pages/home';
 import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
 import Order from './container/order'
 import SignInPage from './pages/signin/SignInPage'
@@ -17,7 +17,7 @@ function App() {
     <>
       <BrowserRouter>
         <Header />
-        <div style={{ marginTop: '114px', marginBottom: '114px', marginLeft: '40px', }}>
+        <div style={{ marginTop: '114px', marginBottom: '114px' }}>
           <Switch>
             <Route path='/signin' component={SignInPage}></Route>
             <Route path='/signup' component={SignUpPage} ></Route>
