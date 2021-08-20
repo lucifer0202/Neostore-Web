@@ -34,7 +34,25 @@ const getCartApi = async () => {
     }
 }
 
+const deleteCartApi = async (data) => {
+    try {
+        let config = {
+            headers: {
+                Authorization: AuthService.getAccessToken(),
+            }
+        }
+
+        const resp = await axios.delete(`/api/cart`, data, config)
+       
+        
+    }
+    catch (error) {
+        console.error(error);
+    }
+}
+
 export const CartServices = {
     addToCartApi,
-    getCartApi
+    getCartApi,
+    deleteCartApi
 }

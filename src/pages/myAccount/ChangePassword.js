@@ -1,6 +1,6 @@
 import React from 'react';
 import clsx from 'clsx';
-import { makeStyles, Grid, Button, Typography } from '@material-ui/core';
+import { makeStyles, Grid, Button, Typography, Paper } from '@material-ui/core';
 import IconButton from '@material-ui/core/IconButton';
 import Input from '@material-ui/core/Input';
 import FilledInput from '@material-ui/core/FilledInput';
@@ -25,7 +25,7 @@ const useStyles = makeStyles((theme) => ({
         marginTop: theme.spacing(3),
     },
     textField: {
-        width: '60ch',
+        width: '40ch',
     },
 }));
 
@@ -52,11 +52,11 @@ export default function InputAdornments() {
     };
 
     return (
-        <>
+        <Paper elevation={6} >
 
-            <Grid container spacing={3} style={{ margin: '32px', dispaly: 'block' }}>
+            <Grid container spacing={3} style={{ dispaly: 'block' ,justifyContent: 'center'}}>
                 <Grid item>
-                    <Typography><h1>Change Password</h1></Typography>
+                    <Typography><h3>Change Password</h3></Typography>
                 </Grid>
                 <Grid item style={{ display: 'block' }}>
                     <FormControl className={clsx(classes.margin, classes.textField)} variant="outlined">
@@ -130,15 +130,11 @@ export default function InputAdornments() {
                         />
                     </FormControl>
                 </Grid>
-                <Grid item >
-                    <Button variant='contained' color='primary' >Submit</Button>
-
-                </Grid>
-
             </Grid>
+            <Button variant='contained' color='primary' style={{margin: '20px'}}>Submit</Button>
 
 
-        </>
+        </Paper>
 
     );
 }

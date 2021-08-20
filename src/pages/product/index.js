@@ -7,6 +7,7 @@ import { ProductService } from '../../services/productServices';
 import { useProductContext } from '../../contexts/ProductContext'
 import { useQuery } from '../../utils/customHooks'
 import PaginationList from './Pagination'
+import Loader from '../../component/Loader'
 
 
 export default function Product() {

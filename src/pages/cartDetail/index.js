@@ -57,12 +57,22 @@ export default function CartDetail() {
             })
     }, [])
 
+    const deleteCart = (row) => {
+      
+        CartServices.deleteCartApi()
+        
+            .then(resp => {
+                console.log("Delete Cart", resp.data.products.productId)
+            })
+            .catch(error => {
+                console.error(error);
+            })
+    }
 
     return (
         <>
             <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                 <h4>Cart</h4>
-
                 <h4>Delivered</h4>
             </div>
             <Grid container spacing={2}>
@@ -79,19 +89,19 @@ export default function CartDetail() {
                                     </TableRow>
                                 </TableHead>
                                 <TableBody>
-                                {list.map((row) => (
+                                    {list.map((row) => (
                                         <TableRow key={row.productId}>
                                             <TableCell component="th" scope="row" style={{ display: 'flex' }}>
                                                 <Grid container spacing={2}>
                                                     <Grid item>
-                                                    <img style={{ width: '85px' }} src={row.productId.mainImage} />
+                                                        <img style={{ width: '85px' }} src={row.productId.mainImage} />
                                                     </Grid>
                                                     <Grid item style={{ display: 'block' }}>
                                                         <div>
-                                                          {row.productId.name}
+                                                            {row.productId.name}
                                                         </div>
                                                         <div>
-                                                            By: 
+                                                            By:
                                                         </div>
                                                         <div>
                                                             Status:  {row.name}
@@ -102,7 +112,7 @@ export default function CartDetail() {
                                             <TableCell align="right">{row.quantity}</TableCell>
                                             <TableCell align="right">{row.productId.price}</TableCell>
                                             <TableCell align="right">{row.totalAmount}</TableCell>
-                                            <TableCell align="right"> <IconButton><DeleteOutlineIcon /></IconButton></TableCell>
+                                            <TableCell align="right"> <IconButton onClick={() => deleteCart(row.productId.id)}><DeleteOutlineIcon /></IconButton></TableCell>
                                         </TableRow>
                                     ))}
                                 </TableBody>

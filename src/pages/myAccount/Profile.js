@@ -13,7 +13,7 @@ const useStyles = makeStyles((theme) => ({
 
     paper2: {
         width: ' 66%',
-        marginLeft: '131px'
+        marginLeft: '82px'
     },
     h1: {
         textAlign: 'center'
@@ -44,13 +44,13 @@ export default function Profile() {
                         First Name
                     </Grid>
                     <Grid item xs={8}>
-                        {authState.user.firstName}
+                        {/* {authState.user.firstName} */}
                     </Grid>
                     <Grid item xs={4}>
                         Last Name
                     </Grid>
                     <Grid item xs={8}>
-                    {authState.user.lastName}
+                    {/* {authState.user.lastName} */}
                     </Grid>
                     <Grid item xs={4}>
                         Gender

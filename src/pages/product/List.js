@@ -9,6 +9,7 @@ import { useAuthContext } from '../../contexts/AuthContext';
 import { CartServices } from '../../services/cardServices'
 import { AuthService } from '../../services/authServices';
 
+
 export default function List({ }) {
     const history = useHistory()
 
