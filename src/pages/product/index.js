@@ -9,7 +9,6 @@ import { useQuery } from '../../utils/customHooks'
 import PaginationList from './Pagination'
 import Loader from '../../component/Loader'
 
-
 export default function Product() {
     const { productState, setProductState } = useProductContext();
     const [isLoading, setIsLoading] = useState(false)
@@ -48,31 +47,20 @@ export default function Product() {
         }
     };
 
-    if (isLoading) {
-        return (
-            <div
-                style={{
-                    display: 'flex',
-                    justifyContent: 'center'
-                }}
-            >
-                <CircularProgress />
-            </div>
-        )
-    }
-
-
-
     return (
-        <Grid container >
-            <Grid sm={2}>
-                <Sidebar getAllProduct={getAllProduct} />
-            </Grid>
-            <Grid sm={10}>
-                <List />
-                <PaginationList getAllProduct={getAllProduct} />
-            </Grid>
+        <>
+            <Loader isLoading={isLoading} />
 
-        </Grid>
+            <Grid container >
+                <Grid sm={2}>
+                    <Sidebar getAllProduct={getAllProduct} />
+                </Grid>
+                <Grid sm={10}>
+                    <List />
+                    <PaginationList getAllProduct={getAllProduct} />
+                </Grid>
+
+            </Grid>
+        </>
     )
 }

@@ -10,12 +10,18 @@ import TableRow from '@material-ui/core/TableRow';
 import { Grid, Button, Paper, Typography } from '@material-ui/core'
 import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
 import Logo from '../../assets/image2.jpg'
+import Checkbox from '@material-ui/core/Checkbox';
+
 
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 import ListItemText from '@material-ui/core/ListItemText';
 import { CartServices } from '../../services/cardServices'
+import Loader from '../../component/Loader'
+import { OrderServices } from '../../services/orderServices';
+import { useAddressContext } from '../../contexts/AddressContext';
+import BuyModal from './BuyModal';
 
 const useStyles = makeStyles({
     root: {
@@ -27,56 +33,72 @@ const useStyles = makeStyles({
     }
 });
 
-function createData(name, calories, fat, carbs, protein) {
-    return { name, calories, fat, carbs, protein };
-}
-function createDate2(subtotal, gst, orderTotal) {
-    return { subtotal, gst, orderTotal }
-}
-
-const rows = [
-    createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
-    createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
-    createData('Eclair', 262, 16.0, 24, 6.0),
-
-];
 
 export default function CartDetail() {
     const classes = useStyles();
     const [list, setList] = useState([])
+    const [isLoading, setIsLoading] = useState(false)
+    const [subTotal, setSubTotal] = useState('')
+    const [isModalOpened, setIsModalOpened] = useState(false)
+
+    const { addressState } = useAddressContext()
 
     useEffect(() => {
+        setIsLoading(true)
         CartServices.getCartApi()
             .then(resp => {
-                console.log("Cart Details", resp.data.products)
                 setList(resp.data.products)
-
+                setSubTotal(resp.data.grandTotal)
+                console.log(resp.data.products.length)
+                setIsLoading(false)
             })
             .catch(error => {
+                setIsLoading(false)
                 console.error(error);
             })
     }, [])
 
-    const deleteCart = (row) => {
-      
-        CartServices.deleteCartApi()
-        
+    const handleRemoveProductFromCart = (productId) => {
+        setIsLoading(true)
+        CartServices.deleteCartApi(productId)
             .then(resp => {
-                console.log("Delete Cart", resp.data.products.productId)
+                console.log("Delete Cart", resp.data.products)
+                setIsLoading(false)
+
             })
             .catch(error => {
+                setIsLoading(false)
                 console.error(error);
             })
     }
 
+    const handleSaveOrder = () => {
+        setIsLoading(true)
+        OrderServices.addOrderApi({ addressId: addressState.addressId })
+            .then(resp => {
+                console.log('--->>>>res', resp.data)
+                setIsLoading(false)
+            })
+            .catch(error => {
+                setIsLoading(false)
+                console.error(error);
+            })
+    }
+    const toggleBuyButton = () => {
+        setIsModalOpened(!isModalOpened)
+    }
+
+
     return (
         <>
-            <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                <h4>Cart</h4>
-                <h4>Delivered</h4>
-            </div>
-            <Grid container spacing={2}>
-                <Grid xs={6}>
+            <Loader isLoading={isLoading} />
+            {isModalOpened &&
+                <BuyModal isModalOpened={isModalOpened}
+                    toggleBuyButton={toggleBuyButton} />
+            }
+
+            <Grid container spacing={2} style={{ padding: '20px' }}>
+                <Grid xs={8}>
                     <Paper>
                         <TableContainer component={Paper}>
                             <Table className={classes.table} aria-label="simple table">
@@ -112,7 +134,7 @@ export default function CartDetail() {
                                             <TableCell align="right">{row.quantity}</TableCell>
                                             <TableCell align="right">{row.productId.price}</TableCell>
                                             <TableCell align="right">{row.totalAmount}</TableCell>
-                                            <TableCell align="right"> <IconButton onClick={() => deleteCart(row.productId.id)}><DeleteOutlineIcon /></IconButton></TableCell>
+                                            <TableCell align="right"> <IconButton onClick={() => handleRemoveProductFromCart(row.productId.id)}><DeleteOutlineIcon /></IconButton></TableCell>
                                         </TableRow>
                                     ))}
                                 </TableBody>
@@ -120,33 +142,34 @@ export default function CartDetail() {
                         </TableContainer>
                     </Paper>
                 </Grid>
-                <Grid xs={6}>
-                    <Paper elevation={6} style={{ display: 'flex', justifyContent: 'center', flexDirection: 'column', padding: '10px' }}>
+                <Grid xs={4}>
+                    <Paper elevation={6} style={{ display: 'flex', justifyContent: 'center', flexDirection: 'column', padding: '10px',background: '#f4b74a' }}>
 
                         <h4 style={{ textAligh: 'center' }}>Review Order</h4>
                         <Divider />
-                        <List dense className={classes.root}>
-                            {[0, 1, 2, 3].map((value) => {
-                                const labelId = `checkbox-list-secondary-label-${value}`;
-                                return (
-                                    <ListItem key={value} button>
-
-                                        <ListItemText id={labelId} primary={`Line item ${value + 1}`} />
-                                        <ListItemSecondaryAction>
-                                            Rupee
-                                        </ListItemSecondaryAction>
+                        <Typography paragraph={true} >
+                            SubTotal:{subTotal}
+                            <List>
+                                <ListItem role={undefined} dense button >
+                                   
+                                        <Checkbox
+                                            edge="start"
+                                        />
+                                      This order contains a gift.
                                     </ListItem>
-                                );
-                            })}
-                        </List>
-                        <Button variant='contained' color='primary' >Proceed To Buy</Button>
+                                </List>
+                        </Typography>
+                            <Button
+                                variant='contained'
+                                color='primary'
+                                onClick={toggleBuyButton} >Proceed To Buy</Button>
 
                     </Paper>
                 </Grid>
 
-            </Grid>
+                </Grid>
         </>
-    );
+            );
 }
 
 

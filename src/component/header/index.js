@@ -25,25 +25,13 @@ import ListItemText from '@material-ui/core/ListItemText';
 import Divider from '@material-ui/core/Divider';
 import { AuthService } from '../../services/authServices';
 
+
 const useStyles = makeStyles((theme) => ({
     root: {
         flexGrow: 1,
         width: 'auto',
         height: 'auto',
         position: 'fixed'
-    },
-    menuButton: {
-        marginRight: theme.spacing(2),
-    },
-
-    tab: {
-        color: 'white',
-        fontWeight: 'bold',
-
-    },
-    tabContainer: {
-        display: 'flex',
-        // marginLeft: '307px'
     },
     title: {
         flexGrow: 1,
@@ -109,7 +97,7 @@ export default function Header() {
     const [tabIndex, setTabIndex] = useState(1);
     const [value, setValue] = useState(1)
     const history = useHistory();
-    const { authState, setAuthState } = useAuthContext()
+    const { setAuthState } = useAuthContext()
 
     const [anchorEl, setAnchorEl] = React.useState(null);
 
@@ -128,15 +116,7 @@ export default function Header() {
     const handleTabChange = (newTabIndex) => {
         setTabIndex(newTabIndex)
     }
-    // const handleAccount = () => {
-    //     if (authState === null) {
-    //         history.push('/signin')
-    //     }
-    //     else {
-    //         history.push("/myAccount")
-    //     }
-    //     console.log("authState", authState)
-    // }
+
     const handleCartClick = () => {
         console.log(AuthService.getAccessToken())
         if (AuthService.getAccessToken()) {
@@ -152,24 +132,26 @@ export default function Header() {
             <Toolbar>
                 <IconButton
                     edge="start"
-                    className={classes.menuButton}
-                    color="inherit"
                     aria-label="open drawer"
                 >
                     <img className={classes.img} src={Logo} alt='logo' />
                 </IconButton>
-                <div className={classes.tabContainer}>
-                    <Tabs
-                        value={tabIndex}
-                        centered
-                        indicatorColor='black'
-                        onChange={(event, newTabIndex) => handleTabChange(newTabIndex)}
-                    >
-                        <Tab label='Home' className={classes.tab} value={1} href='/' />
-                        <Tab label='Product' className={classes.tab} value={2} href='/product' />
-                        <Tab label='Order' className={classes.tab} value={3} href='/order' />
-                    </Tabs>
-                </div>
+                <Tabs
+                    value={tabIndex}
+                    centered
+                    indicatorColor='black'
+                    onChange={(event, newTabIndex) => handleTabChange(newTabIndex)}
+                >
+                    <Tab
+                        label='Home'
+                        href='/' />
+                    <Tab
+                        label='Product'
+                        href='/product' />
+                    <Tab
+                        label='Order'
+                        href='/order' />
+                </Tabs>
                 <Grid className={classes.gridContainer}>
                     <div className={classes.search}>
                         <div className={classes.searchIcon}>
@@ -188,12 +170,10 @@ export default function Header() {
                     <Button className={classes.button} onClick={handleCartClick} >
                         <ShoppingCartOutlinedIcon />
                     </Button>
-
                     <Button
                         className={classes.button}
                         aria-describedby={id}
                         onClick={handleClick}
-                    // onClick={handleAccount}
                     >
                         <AccountCircleSharpIcon />
                     </Button>
@@ -215,13 +195,12 @@ export default function Header() {
                         <List component="nav" aria-label="main mailbox folders">
                             {AuthService.getAccessToken() ? <>
                                 <ListItem button>
-                                    <ListItemText primary="Account" 
-                                    onClick={() => {
-                                        handleClose();
-                                        history.push('/myAccount')
-                                    }}  />
+                                    <ListItemText primary="Account"
+                                        onClick={() => {
+                                            handleClose();
+                                            history.push('/myAccount')
+                                        }} />
                                 </ListItem>
-
                                 <Divider />
                                 <ListItem button>
                                     <ListItemText primary="Logout" onClick={() => {

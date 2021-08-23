@@ -34,7 +34,7 @@ const getCartApi = async () => {
     }
 }
 
-const deleteCartApi = async (data) => {
+const deleteCartApi = async (productId) => {
     try {
         let config = {
             headers: {
@@ -42,9 +42,8 @@ const deleteCartApi = async (data) => {
             }
         }
 
-        const resp = await axios.delete(`/api/cart`, data, config)
-       
-        
+        const resp = await axios.delete(`/api/cart/`+productId, config)
+              
     }
     catch (error) {
         console.error(error);

@@ -5,13 +5,17 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { AuthContextProvider } from './contexts/AuthContext'
 import { ProductContextProvider } from './contexts/ProductContext';
+import { AddressContextProvider } from './contexts/AddressContext';
+
 
 ReactDOM.render(
   <React.StrictMode>
     <AuthContextProvider>
-      <ProductContextProvider>
-        <App />
-      </ProductContextProvider>
+      <AddressContextProvider>
+        <ProductContextProvider>
+          <App />
+        </ProductContextProvider>
+      </AddressContextProvider>
     </AuthContextProvider>
   </React.StrictMode>,
   document.getElementById('root')
