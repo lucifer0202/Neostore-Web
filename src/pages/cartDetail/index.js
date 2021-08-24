@@ -9,17 +9,12 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import { Grid, Button, Paper, Typography } from '@material-ui/core'
 import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
-import Logo from '../../assets/image2.jpg'
 import Checkbox from '@material-ui/core/Checkbox';
-
 
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
-import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
-import ListItemText from '@material-ui/core/ListItemText';
 import { CartServices } from '../../services/cardServices'
 import Loader from '../../component/Loader'
-import { OrderServices } from '../../services/orderServices';
 import { useAddressContext } from '../../contexts/AddressContext';
 import BuyModal from './BuyModal';
 
@@ -41,9 +36,10 @@ export default function CartDetail() {
     const [subTotal, setSubTotal] = useState('')
     const [isModalOpened, setIsModalOpened] = useState(false)
 
-    const { addressState } = useAddressContext()
-
     useEffect(() => {
+        addCart()
+    }, [])
+    const addCart = () => {
         setIsLoading(true)
         CartServices.getCartApi()
             .then(resp => {
@@ -56,15 +52,14 @@ export default function CartDetail() {
                 setIsLoading(false)
                 console.error(error);
             })
-    }, [])
+    }
 
-    const handleRemoveProductFromCart = (productId) => {
+    const handleRemoveProductFromCart = (_id) => {
         setIsLoading(true)
-        CartServices.deleteCartApi(productId)
+        CartServices.deleteCartApi(_id)
             .then(resp => {
-                console.log("Delete Cart", resp.data.products)
+                // console.log("Delete Cart", resp.data.products)
                 setIsLoading(false)
-
             })
             .catch(error => {
                 setIsLoading(false)
@@ -72,18 +67,6 @@ export default function CartDetail() {
             })
     }
 
-    const handleSaveOrder = () => {
-        setIsLoading(true)
-        OrderServices.addOrderApi({ addressId: addressState.addressId })
-            .then(resp => {
-                console.log('--->>>>res', resp.data)
-                setIsLoading(false)
-            })
-            .catch(error => {
-                setIsLoading(false)
-                console.error(error);
-            })
-    }
     const toggleBuyButton = () => {
         setIsModalOpened(!isModalOpened)
     }
@@ -112,7 +95,7 @@ export default function CartDetail() {
                                 </TableHead>
                                 <TableBody>
                                     {list.map((row) => (
-                                        <TableRow key={row.productId}>
+                                        <TableRow key={row.productId.id}>
                                             <TableCell component="th" scope="row" style={{ display: 'flex' }}>
                                                 <Grid container spacing={2}>
                                                     <Grid item>
@@ -134,7 +117,7 @@ export default function CartDetail() {
                                             <TableCell align="right">{row.quantity}</TableCell>
                                             <TableCell align="right">{row.productId.price}</TableCell>
                                             <TableCell align="right">{row.totalAmount}</TableCell>
-                                            <TableCell align="right"> <IconButton onClick={() => handleRemoveProductFromCart(row.productId.id)}><DeleteOutlineIcon /></IconButton></TableCell>
+                                            <TableCell align="right"> <IconButton onClick={() => handleRemoveProductFromCart(row.productId._id)}><DeleteOutlineIcon /></IconButton></TableCell>
                                         </TableRow>
                                     ))}
                                 </TableBody>

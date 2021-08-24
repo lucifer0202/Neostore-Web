@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Divider, Grid, Paper, makeStyles, Button } from '@material-ui/core';
 import EditIcon from '@material-ui/icons/Edit';
 import { useAuthContext } from '../../contexts/AuthContext';
@@ -31,8 +31,15 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Profile() {
     const classes = useStyles();
-    const { authState } = useAuthContext();
-    console.log(authState.user)
+    const [storedData, setStoredData] = useState({})
+
+    useEffect(async () => {
+        const data = await JSON.parse(localStorage.getItem('Profile Data'))
+        setStoredData(data)
+        console.log("storedData", data)
+    }, [])
+
+
     return (
         <Paper elevation={6} className={classes.paper2} >
             <Grid className={classes.grid}>
@@ -44,37 +51,32 @@ export default function Profile() {
                         First Name
                     </Grid>
                     <Grid item xs={8}>
-                        {/* {authState.user.firstName} */}
+                        {storedData.firstName}
                     </Grid>
                     <Grid item xs={4}>
                         Last Name
                     </Grid>
                     <Grid item xs={8}>
-                    {/* {authState.user.lastName} */}
+                        {storedData.lastName}
                     </Grid>
                     <Grid item xs={4}>
                         Gender
                     </Grid>
                     <Grid item xs={8}>
+                        {storedData.gender}
+                    </Grid>
 
-                    </Grid>
-                    <Grid item xs={4}>
-                        Date of Birth
-                    </Grid>
-                    <Grid item xs={8}>
-
-                    </Grid>
                     <Grid item xs={4}>
                         Mobile Number
                     </Grid>
                     <Grid item xs={8}>
-
+                        {storedData.mobile}
                     </Grid>
                     <Grid item xs={4}>
                         Email ID
                     </Grid>
                     <Grid item xs={8}>
-                        {authState.email}
+                        {storedData.email}
                     </Grid>
 
                 </Grid>

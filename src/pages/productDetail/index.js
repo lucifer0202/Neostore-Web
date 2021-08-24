@@ -37,7 +37,7 @@ export default function ProductDetail() {
 
     useEffect(() => {
         if (authState.user) {
-            axios.get('/api/cart') 
+            axios.get('/api/cart')
                 .then(resp => {
                     console.log("Cart Details", resp.data)
 
@@ -62,57 +62,75 @@ export default function ProductDetail() {
         <>
             {Object.keys(productValue).length > 0 &&
 
-
-                <div key={productValue.id}>
-                    <Grid container spacing={3} style={{ display: 'flex' }}>
-                        <Grid item xs={6} >
-                            <img src={Logo} width="400" height="400" className='responsive'></img>
-
-                        </Grid>
-                        <Divider />
-                        <Grid item xs={6}>
-                            <h1>{productValue.name}</h1>
-                            <Rating
-                                name="simple-controlled"
-                                value={productValue.avgRating}
-                            />
-                            <Divider />
-                            <h3>Price: {productValue.price}</h3>
-                            <h3>Color: {productValue.color.name}</h3>
-                            <div>
-                                <h3>Share</h3><ShareIcon />
-                            </div>
-                            <Grid item style={{ display: 'flex', justifyContent: 'space-evenly' }}>
-                                <Button style={{ borderRadius: '34px', background: 'blue' }}><FacebookIcon fontSize='large' style={{ color: 'white' }} /></Button>
-                                <Button style={{ borderRadius: '34px', background: '#e53b3b' }}><TwitterIcon fontSize='large' style={{ color: 'white' }} /></Button>
-                                <Button style={{ borderRadius: '34px', background: '#82ba81' }}><WhatsAppIcon fontSize='large' style={{ color: 'white' }} /></Button>
-                                <Button style={{ borderRadius: '34px', background: '#d16ac9' }}><PinterestIcon fontSize='large' style={{ color: 'white' }} /></Button>
-                                <Button><AiFillGoogleCircle /></Button>
-                            </Grid>
-                            <Grid item style={{ marginTop: '20px', display: 'flex', justifyContent: 'space-evenly' }}>
-                                <Button variant="contained" color="primary" onClick={handleCartClick}>
-                                    Add to card
-                                </Button>
-                                <Button variant="contained" color="secondary">
-                                    Rate Product
-                                </Button>
-                            </Grid>
-                        </Grid>
-
-                        <Paper elevation={6}>
-                            <img style={{ width: '200px', margin: ' 10px' }} src={Logo}></img>
-
-                            <img style={{ width: '200px', margin: ' 10px' }} src={Logo}></img>
-
-                            <img style={{ width: '200px', margin: ' 10px' }} src={Logo}></img>
-
-                            <DescriptionTab
-                                description={productValue.description}
-                                features={productValue.features}
-                            />
-                        </Paper>
+                <Grid
+                    key={productValue.id}
+                    container
+                    spacing={3}
+                    className='container'>
+                    <Grid item xs={6} >
+                        <img
+                            src={productValue.mainImage}
+                            width="400"
+                            height="400"
+                            className='responsive'>
+                        </img>
                     </Grid>
-                </div>
+                    <Divider />
+                    <Grid item xs={6}>
+                        <h3>{productValue.name}</h3>
+                        <Rating
+                            name="simple-controlled"
+                            value={productValue.avgRating}
+                        />
+                        <Divider />
+                        <h3>Price: {productValue.price}</h3>
+                        <h3>Color: {productValue.color.name}</h3>
+                        <div>
+                            <h3>Share</h3><ShareIcon />
+                        </div>
+                        <Grid item style={{ display: 'flex', justifyContent: 'space-evenly' }}>
+                            <Button
+                                className='btn1' >
+                                <FacebookIcon fontSize='large' style={{ color: 'white' }} />
+                            </Button>
+                            <Button
+                                className='btn2'>
+                                <TwitterIcon fontSize='large' style={{ color: 'white' }} />
+                            </Button>
+                            <Button
+                                className='btn3'>
+                                <WhatsAppIcon fontSize='large' style={{ color: 'white' }} />
+                            </Button>
+                            <Button
+                                className='btn4'>
+                                <PinterestIcon fontSize='large' style={{ color: 'white' }} />
+                            </Button>
+                        </Grid>
+                        <Grid item style={{ marginTop: '20px', display: 'flex', justifyContent: 'space-evenly' }}>
+                            <Button variant="contained" color="primary" onClick={handleCartClick}>
+                                Add to card
+                            </Button>
+                            <Button variant="contained" color="secondary">
+                                Rate Product
+                            </Button>
+                        </Grid>
+                    </Grid>
+                    <Paper elevation={6}>
+                        <img
+                        className='img'
+                        src={productValue.mainImage}></img>
+                        {productValue.subImages.map(image => {
+                            return (
+                                <img style={{ margin: ' 10px', width: '82px' }} src={image}></img>
+                            )
+                        })}
+                        <DescriptionTab
+                            description={productValue.description}
+                            features={productValue.features}
+                        />
+                    </Paper>
+                </Grid>
+
             }
 
         </>

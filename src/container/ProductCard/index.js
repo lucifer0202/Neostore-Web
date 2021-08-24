@@ -40,29 +40,29 @@ export default function ProductCard({ item }) {
   return (
     <>
       <Loader
-        isLoading={isLoading} />
+       isLoading={isLoading} />
       <Paper
         key={item.id}
         elevation={15}
-        style={{ height: 400, width: 300, cursor: 'pointer' }}
+         style={{ height: 400, width: 300, cursor: 'pointer' }}
         onClick={() => handleCardClick(item.id)} >
 
         <img
-          style={{
-            width: '93%',
-            height: "166px",
-            margin: '10px',
-          }}
-          src={item.mainImage} />
-        <Grid
-          container
-          spacing={1}
+         style={{
+          width: '93%',
+          height: "166px",
+          margin: '10px',
+        }}
+         src={item.mainImage} />
+        <Grid 
+        container
+         spacing={1}
           style={{ display: 'block', textAlign: 'center', padding: '24px' }}>
           <Grid item>
             <Typography
-              style={{ color: 'blue', fontWeight: 'bold', width: '280px' }}>
-              {item.name}
-            </Typography>
+             style={{ color: 'blue', fontWeight: 'bold', width: '280px' }}>
+               {item.name} 
+               </Typography>
           </Grid>
           <Grid item >
             <Typography >{item.price} <BiRupee /></Typography>

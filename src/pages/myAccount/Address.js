@@ -4,48 +4,52 @@ import CloseIcon from '@material-ui/icons/Close';
 import NewAddressModal from './NewAddressModal';
 import { AddressServices } from '../../services/addressServices';
 import Loader from '../../component/Loader'
+import EditAddressModal from './EditAddressModal';
 
 export default function Address() {
     const [isModalOpened, setIsModalOpened] = useState(false)
+    const [isEditModalOpened, setIsEditModalOpened] = useState(false)
     const [isLoading, setIsLoading] = useState(false)
     const [list, setList] = useState([])
+    const [selectedAddress, setSelectedAddress] = useState({});
 
-    const handleAddressToggle = () => {
-        setIsModalOpened(!isModalOpened)
-    }
     useEffect(() => {
         setIsLoading(true)
         AddressServices.getNewAddressApi()
             .then(resp => {
-                console.log("get address", resp.data)
+                console.log("get Address", resp.data.address)
                 setList(resp.data.address)
                 setIsLoading(false)
+
             })
             .catch(error => {
                 setIsLoading(false)
                 console.error(error);
             })
     }, [])
+   
 
-    const handleUpdateAddress = (addressLine, pincode, city, state, country) => {
+    const handleAddressToggle = () => {
+        setIsModalOpened(!isModalOpened)
+    }
+
+    const toggleUpdateAddress = (id, data) => {
+        setIsEditModalOpened(!isEditModalOpened)
+
         setIsLoading(true)
-        AddressServices.UpdateAddressApi(JSON.stringify({
-            addressLine: addressLine,
-            pincode: pincode,
-            city: city,
-            state: state,
-            country: country
-        }))
+        AddressServices.updateAddressApi(id, data)
             .then(resp => {
-                console.log("update address", resp.data.address)
-                setList(resp.data.address)
+                console.log("Update Address", resp.data)
                 setIsLoading(false)
+
             })
             .catch(error => {
                 setIsLoading(false)
                 console.error(error);
             })
     }
+
+
     const handleRemoveAddress = (_id) => {
         setIsLoading(true)
         AddressServices.deleteAddressApi(_id)
@@ -60,6 +64,11 @@ export default function Address() {
             })
     }
 
+    const handleEditButtonClick = (data) => {
+        setSelectedAddress(data);
+        setIsEditModalOpened(true)
+    }
+
 
     return (
         <>
@@ -70,6 +79,14 @@ export default function Address() {
                 <NewAddressModal
                     isModalOpened={isModalOpened}
                     handleAddressToggle={handleAddressToggle}
+                />
+            }
+            {
+                isEditModalOpened &&
+                <EditAddressModal
+                    isEditModalOpened={isEditModalOpened}
+                    toggleUpdateAddress={toggleUpdateAddress}
+                    selectedAddress={selectedAddress}
                 />
             }
             <Paper>
@@ -93,8 +110,7 @@ export default function Address() {
                             <Button
                                 variant='contained'
                                 color='primary'
-                                onClick={() => handleUpdateAddress(item.addressLine,
-                                    item.pincode, item.city, item.state, item.country)}
+                                onClick={() => handleEditButtonClick(item)}
                             >
                                 Edit
                             </Button>

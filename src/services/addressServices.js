@@ -31,7 +31,7 @@ const getNewAddressApi = async () => {
         console.error(error);
     }
 }
-const UpdateAddressApi = async (addressId) => {
+const updateAddressApi = async (addressId, data) => {
     try {
         let config = {
             headers: {
@@ -39,7 +39,7 @@ const UpdateAddressApi = async (addressId) => {
             }
 
         }
-        const resp = await axios.put(`api/user/address` + addressId, config)
+        const resp = await axios.put(`api/user/address/${addressId}`, data, config)
         return resp.data
     }
     catch (error) {
@@ -63,6 +63,6 @@ const deleteAddressApi = async (_id) => {
 export const AddressServices = {
     addNewAddressApi,
     getNewAddressApi,
-    UpdateAddressApi,
+    updateAddressApi,
     deleteAddressApi
 }

@@ -89,13 +89,21 @@ const useStyles = makeStyles((theme) => ({
     img: {
         width: '100px',
         height: '50px'
+    },
+    menubutton: {
+        fontWeight: 700,
+        size: '18px',
+        '&:hover, &:focus': {
+            background: '#5D6D7E',
+            color: '#fffffff'
+        }
     }
 }));
 
 export default function Header() {
     const classes = useStyles();
     const [tabIndex, setTabIndex] = useState(1);
-    const [value, setValue] = useState(1)
+    const [value, setValue] = useState()
     const history = useHistory();
     const { setAuthState } = useAuthContext()
 
@@ -113,8 +121,8 @@ export default function Header() {
     const id = open ? 'simple-popover' : undefined;
 
 
-    const handleTabChange = (newTabIndex) => {
-        setTabIndex(newTabIndex)
+    const handleTabChange = (newValue) => {
+        setValue(newValue)
     }
 
     const handleCartClick = () => {
@@ -137,10 +145,10 @@ export default function Header() {
                     <img className={classes.img} src={Logo} alt='logo' />
                 </IconButton>
                 <Tabs
-                    value={tabIndex}
+                    value={value}
                     centered
                     indicatorColor='black'
-                    onChange={(event, newTabIndex) => handleTabChange(newTabIndex)}
+                    // onChange={handleTabChange}
                 >
                     <Tab
                         label='Home'

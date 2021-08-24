@@ -27,6 +27,9 @@ const useStyles = makeStyles((theme) => ({
     textField: {
         width: '40ch',
     },
+    paper: {
+       padding: '35px' 
+    }
 }));
 
 export default function InputAdornments() {
@@ -52,13 +55,12 @@ export default function InputAdornments() {
     };
 
     return (
-        <Paper elevation={6} >
+        <Paper elevation={6} className={classes.paper} >
+            
+                <Typography><h3>Change Password</h3></Typography>
+            <Grid container spacing={3}>
 
-            <Grid container spacing={3} style={{ dispaly: 'block' ,justifyContent: 'center'}}>
                 <Grid item>
-                    <Typography><h3>Change Password</h3></Typography>
-                </Grid>
-                <Grid item style={{ display: 'block' }}>
                     <FormControl className={clsx(classes.margin, classes.textField)} variant="outlined">
                         <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>
                         <OutlinedInput
@@ -131,7 +133,7 @@ export default function InputAdornments() {
                     </FormControl>
                 </Grid>
             </Grid>
-            <Button variant='contained' color='primary' style={{margin: '20px'}}>Submit</Button>
+            <Button variant='contained' color='primary' style={{ margin: '20px' }}>Submit</Button>
 
 
         </Paper>

@@ -1,9 +1,6 @@
-import React, { useState ,useEffect} from 'react'
-import { Divider, Grid, Paper, makeStyles, Button, Typography, IconButton } from '@material-ui/core';
+import React, { useState, useEffect } from 'react'
+import { Divider, Grid, Paper, makeStyles, Button, TextField, IconButton } from '@material-ui/core';
 import MainModal from '../../component/mainModal'
-import TextField from '@material-ui/core/TextField';
-import SaveIcon from '@material-ui/icons/Save';
-import CloseIcon from '@material-ui/icons/Close';
 import Loader from '../../component/Loader'
 import { AddressServices } from '../../services/addressServices';
 
@@ -15,53 +12,42 @@ const useStyles = makeStyles((theme) => ({
         },
     },
 }));
-export default function NewAddressModal({ handleAddressToggle, isModalOpened }) {
+export default function EditAddressModal({
+    toggleUpdateAddress,
+    isEditModalOpened,
+    selectedAddress }) {
     const classes = useStyles();
     const [isLoading, setIsLoading] = useState(false)
-    const [addressLine, setAddress] = useState('')
-    const [pincode, setPincode] = useState('')
-    const [city, setCity] = useState('')
-    const [state, setState] = useState('')
-    const [country, setCountry] = useState('')
-    const [addressError, setAddressError] = useState(false)
+    const [addressLine, setAddress] = useState(selectedAddress.addressLine)
+    const [pincode, setPincode] = useState(selectedAddress.pincode)
+    const [city, setCity] = useState(selectedAddress.city)
+    const [state, setState] = useState(selectedAddress.state)
+    const [country, setCountry] = useState(selectedAddress.country)
+    const [list, setList] = useState({})
 
+    useEffect(() => {
+        console.log("Current Selected address", selectedAddress)
+    }, [])
     const handleAddressInput = (e) => {
-        if ((e.target.value).length > 10) {
-            setAddressError(false)
-        }
-        else {
-            setAddressError(true)
-        }
-        setAddress(e.target.value)
+        setAddress(selectedAddress.addressLine)
     }
     const handleSaveAddress = () => {
-        setIsLoading(true)
-        AddressServices.addNewAddressApi({ addressLine: addressLine, pincode: pincode, city: city, state: state, country: country })
-            .then(resp => {
-                console.log('--->>>>res', resp.data)
-                setIsLoading(false)
-            })
-            .catch(error => {
-                setIsLoading(false)
-                console.error(error);
-            })
+        toggleUpdateAddress(selectedAddress._id, { addressLine, pincode, city, state, country })
     }
 
     return (
         <>
             <Loader isLoading={isLoading} />
-            <MainModal open={isModalOpened} toggleModal={handleAddressToggle}>
-                <Paper style={{padding: '35px'}}>
-                    <h3>Add New Address</h3>
-                    <form className={classes.root} noValidate autoComplete="off" style={{ display: 'grid' }} onSubmit={handleSaveAddress}>
+            <MainModal open={isEditModalOpened} toggleModal={toggleUpdateAddress}>
+                <Paper style={{ padding: '35px' }}>
+                    <h3>Update Address</h3>
+                    <form className={classes.root} noValidate autoComplete="off" style={{ display: 'grid' }}>
 
                         <TextField
                             label="Address"
                             value={addressLine}
                             variant="outlined"
                             multiline
-                            error={addressError}
-                            helperText={addressError ? "Incorrect entry." : ''}
                             onChange={handleAddressInput}
                         />
                         <TextField
@@ -89,12 +75,13 @@ export default function NewAddressModal({ handleAddressToggle, isModalOpened }) 
                             onChange={(e) => setCountry(e.target.value)}
                         />
                         <div style={{ justifyContent: 'space-around', display: 'flex' }}>
-                            <Button variant='contained' color='primary' onClick={handleSaveAddress} ><SaveIcon />Save</Button>
-                            <Button variant='contained' color='secondary'><CloseIcon />Cancel</Button>
+                            <Button variant='contained' color='primary' onClick={handleSaveAddress} >Save</Button>
+                            <Button variant='contained' color='secondary'>Cancel</Button>
                         </div>
                     </form>
                 </Paper>
             </MainModal>
+
         </>
     )
 }

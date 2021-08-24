@@ -1,13 +1,10 @@
 import React, { useEffect, useState } from 'react'
-import { Grid, Paper, Button, Typography, Box } from '@material-ui/core'
+import { Grid} from '@material-ui/core'
 
 
 import { useProductContext } from '../../contexts/ProductContext'
 
 import ProductCard from '../../container/ProductCard/index';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-
 
 export default function ListView({ }) {
 
@@ -23,19 +20,17 @@ export default function ListView({ }) {
 
 
   return (
-    <List>
-
+    <Grid container spacing={2}>
       {
         list.map(item => {
           return (
-            <ListItem>
+            <Grid item>
               <ProductCard item={item} />
-
-            </ListItem>
+            </Grid>
           )
         })
       }
-    </List>
+    </Grid>
 
   )
 }

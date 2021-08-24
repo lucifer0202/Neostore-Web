@@ -18,12 +18,18 @@ const useStyles = makeStyles((theme) => ({
   },
   productList: {
     flexWrap: 'nowrap',
-    // Promote the list into his own layer on Chrome. This cost memory but helps keeping high FPS.
     transform: 'translateZ(0)',
     display: 'flex',
     flexDirection: 'row',
     overflowY: 'scroll'
   },
+  container:{
+    display: 'contents'
+  },
+  img: {
+    width: '100%',
+    height: '200px'
+  }
 }))
 
 
@@ -55,18 +61,25 @@ export default function Home() {
 
   return (
     <div className={classes.root}>
-      <Loader isLoading={isLoading} />
-      <img src={Image} style={{ width: '100%', height: '200px' }}></img>
-
-      <List className={classes.productList}>
+      <Loader
+        isLoading={isLoading} />
+      <img
+        src={Image}
+        className={classes.img}>
+      </img>
+      <Grid
+        container
+        spacing={3}
+        className={classes.container}
+        >
         {
           productList.map(product => (
-            <ListItem>
+            <Grid item>
               <ProductCard item={product} />
-            </ListItem>
+            </Grid>
           ))
         }
-      </List>
+      </Grid>
     </div>
   )
 }

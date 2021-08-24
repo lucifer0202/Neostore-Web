@@ -3,6 +3,7 @@ import MainModal from '../../component/mainModal'
 import { Paper, Button, makeStyles } from '@material-ui/core';
 import Loader from '../../component/Loader'
 import { AddressServices } from '../../services/addressServices';
+import { OrderServices } from '../../services/orderServices';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
@@ -24,6 +25,7 @@ const useStyles = makeStyles((theme) => ({
 export default function BuyModal({ toggleBuyButton, isModalOpened }) {
     const classes = useStyles();
     const [checked, setChecked] = React.useState([1]);
+    const [selectedAddress, setSelectedAddress] = useState(null);
 
     const handleToggle = (value) => () => {
         const currentIndex = checked.indexOf(value);
@@ -52,11 +54,31 @@ export default function BuyModal({ toggleBuyButton, isModalOpened }) {
                 setIsLoading(false)
                 console.error(error);
             })
-    }, [])
+    }, []);
 
+    const placeOrder = () =>{
+        if(!selectedAddress){
+            return
+        }
+
+        setIsLoading(true)
+        OrderServices.addOrderApi({ addressId: selectedAddress })
+            .then(resp => {
+                toggleBuyButton()
+                console.log('--->>>>res', resp.data)
+                setIsLoading(false)
+            })
+            .catch(error => {
+                setIsLoading(false)
+                console.error(error);
+            })
+    }
+
+    if(isLoading){
+        return <Loader isLoading={isLoading} />
+    }
     return (
         <>
-            {<Loader isLoading={isLoading} />}
             <MainModal open={isModalOpened} toggleModal={toggleBuyButton}>
                 <Paper>
                     <List dense className={classes.root}>
@@ -75,13 +97,13 @@ export default function BuyModal({ toggleBuyButton, isModalOpened }) {
                                             </div>
                                     </ListItemText>
 
-                                    {/* <ListItemText id={labelId} primary={`Line item ${value + 1}`} /> */}
                                     <ListItemSecondaryAction>
                                         <Checkbox
                                             edge="end"
                                         
                                         // checked={checked.indexOf(value) !== -1}
                                         // inputProps={{ 'aria-labelledby': labelId }}
+                                        onChange={() => setSelectedAddress(item._id)}
                                         />
                                         
                                     </ListItemSecondaryAction>
@@ -90,7 +112,7 @@ export default function BuyModal({ toggleBuyButton, isModalOpened }) {
                             )
                         })}
                     </List>
-                    <Button variant='contained' color='primary'>Buy Now</Button>
+                    <Button variant='contained' color='primary' onClick={placeOrder}>Buy Now</Button>
                 </Paper>
             </MainModal>
         </>

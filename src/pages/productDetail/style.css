@@ -1,7 +1,31 @@
 .responsive {
-    width: 100%;
-    height: auto;
-  }
-  h1 {
-    color: black;
-  }
+  width: 100%;
+  height: auto;
+}
+h1 {
+  color: black;
+}
+.container {
+  display: flex;
+  padding: 20px;
+}
+.btn1 {
+  border-radius: 34px;
+  background: blue;
+}
+.btn2 {
+  border-radius: 34px;
+  background: #e53b3b;
+}
+.btn3 {
+  border-radius: 34px;
+  background: #82ba81;
+}
+.btn4 {
+  border-radius: 34px;
+  background: #d16ac9;
+}
+.img {
+  margin: 10px;
+  width: 82px;
+}

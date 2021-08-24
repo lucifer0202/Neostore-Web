@@ -3,7 +3,7 @@ import Header from './component/header/index';
 import Footer from './component/footer';
 import Home from './pages/home';
 import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
-import Order from './container/order'
+import Order from './pages/myAccount/Order'
 import SignInPage from './pages/signin/SignInPage'
 import SignUpPage from './pages/signup/signupPage';
 import Product from './pages/product';

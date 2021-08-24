@@ -1,0 +1,20 @@
+.paper {
+    height: 400px;
+    width: 200px;
+    cursor: pointer
+  }
+  .img {
+    width: 93%;
+    height: 166px;
+    margin: 10px
+  }
+  .container {
+    display: block;
+    text-align: center;
+    padding: 24px
+  }
+  .typography {
+    color: blue;
+    font-weight: bold;
+    width: 280px
+  }

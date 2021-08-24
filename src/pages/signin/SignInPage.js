@@ -42,6 +42,8 @@ const SignInPage = () => {
     try {
       setIsLoading(true);
       const user = await AuthService.signIn(signInInput);
+      localStorage.setItem('Profile Data', JSON.stringify(user) );
+
       setAuthState({ ...authState, user });
       setIsLoading(false);
       navigateToSignInRedirect();
