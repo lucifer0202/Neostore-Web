@@ -15,7 +15,7 @@ const useStyles = makeStyles((theme) => ({
         },
     },
 }));
-export default function NewAddressModal({ handleAddressToggle, isModalOpened }) {
+export default function NewAddressModal({ handleAddressToggle, isModalOpened,setIsModalOpened }) {
     const classes = useStyles();
     const [isLoading, setIsLoading] = useState(false)
     const [addressLine, setAddress] = useState('')
@@ -45,6 +45,9 @@ export default function NewAddressModal({ handleAddressToggle, isModalOpened }) 
                 setIsLoading(false)
                 console.error(error);
             })
+    }
+    const handleCancelButton = () => {
+        setIsModalOpened(false)
     }
 
     return (
@@ -90,7 +93,7 @@ export default function NewAddressModal({ handleAddressToggle, isModalOpened }) 
                         />
                         <div style={{ justifyContent: 'space-around', display: 'flex' }}>
                             <Button variant='contained' color='primary' onClick={handleSaveAddress} ><SaveIcon />Save</Button>
-                            <Button variant='contained' color='secondary'><CloseIcon />Cancel</Button>
+                            <Button variant='contained' color='secondary' onClick={handleCancelButton} ><CloseIcon />Cancel</Button>
                         </div>
                     </form>
                 </Paper>

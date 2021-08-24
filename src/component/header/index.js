@@ -93,11 +93,11 @@ const useStyles = makeStyles((theme) => ({
     menubutton: {
         fontWeight: 700,
         size: '18px',
-        '&:hover, &:focus': {
-            background: '#5D6D7E',
-            color: '#fffffff'
-        }
-    }
+        '&:hover': {
+            background: "rgb(128, 128, 128)",
+        },
+    },
+
 }));
 
 export default function Header() {
@@ -148,15 +148,17 @@ export default function Header() {
                     value={value}
                     centered
                     indicatorColor='black'
-                    // onChange={handleTabChange}
+                // onChange={handleTabChange}
                 >
-                    <Tab
+                    <Tab className={classes.menubutton}
                         label='Home'
                         href='/' />
                     <Tab
+                        className={classes.menubutton}
                         label='Product'
                         href='/product' />
                     <Tab
+                        className={classes.menubutton}
                         label='Order'
                         href='/order' />
                 </Tabs>

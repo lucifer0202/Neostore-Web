@@ -10,22 +10,29 @@ h1 {
   padding: 20px;
 }
 .btn1 {
+  transition: transform 0.2s;
   border-radius: 34px;
   background: blue;
 }
 .btn2 {
+  transition: transform 0.2s;
   border-radius: 34px;
   background: #e53b3b;
 }
 .btn3 {
+  transition: transform 0.2s;
   border-radius: 34px;
   background: #82ba81;
 }
 .btn4 {
+  transition: transform 0.2s;
   border-radius: 34px;
   background: #d16ac9;
 }
+
+
 .img {
-  margin: 10px;
+
   width: 82px;
+  
 }

@@ -23,7 +23,7 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: 'row',
     overflowY: 'scroll'
   },
-  container:{
+  container: {
     display: 'contents'
   },
   img: {
@@ -70,8 +70,7 @@ export default function Home() {
       <Grid
         container
         spacing={3}
-        className={classes.container}
-        >
+        className={classes.container}>
         {
           productList.map(product => (
             <Grid item>

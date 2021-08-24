@@ -117,11 +117,10 @@ export default function ProductDetail() {
                     </Grid>
                     <Paper elevation={6}>
                         <img
-                        className='img'
-                        src={productValue.mainImage}></img>
+                        style={{ width: '200px', margin: ' 10px', width: '82px' }} src={productValue.mainImage}></img>
                         {productValue.subImages.map(image => {
                             return (
-                                <img style={{ margin: ' 10px', width: '82px' }} src={image}></img>
+                                <img style={{ width: '200px', margin: ' 10px', width: '82px' }} src={image}></img>
                             )
                         })}
                         <DescriptionTab

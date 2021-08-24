@@ -28,7 +28,8 @@ const useStyles = makeStyles((theme) => ({
         width: '40ch',
     },
     paper: {
-       padding: '35px' 
+       padding: '30px' ,
+       marginLeft: '20px'
     }
 }));
 

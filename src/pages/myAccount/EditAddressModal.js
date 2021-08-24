@@ -15,6 +15,7 @@ const useStyles = makeStyles((theme) => ({
 export default function EditAddressModal({
     toggleUpdateAddress,
     isEditModalOpened,
+    setIsEditModalOpened,
     selectedAddress }) {
     const classes = useStyles();
     const [isLoading, setIsLoading] = useState(false)
@@ -33,6 +34,9 @@ export default function EditAddressModal({
     }
     const handleSaveAddress = () => {
         toggleUpdateAddress(selectedAddress._id, { addressLine, pincode, city, state, country })
+    }
+    const handleCancelButton = () => {
+        setIsEditModalOpened(false)
     }
 
     return (
@@ -76,7 +80,7 @@ export default function EditAddressModal({
                         />
                         <div style={{ justifyContent: 'space-around', display: 'flex' }}>
                             <Button variant='contained' color='primary' onClick={handleSaveAddress} >Save</Button>
-                            <Button variant='contained' color='secondary'>Cancel</Button>
+                            <Button variant='contained' color='secondary' onClick={handleCancelButton}>Cancel</Button>
                         </div>
                     </form>
                 </Paper>

@@ -20,14 +20,13 @@ export default function Address() {
                 console.log("get Address", resp.data.address)
                 setList(resp.data.address)
                 setIsLoading(false)
-
             })
             .catch(error => {
                 setIsLoading(false)
                 console.error(error);
             })
+
     }, [])
-   
 
     const handleAddressToggle = () => {
         setIsModalOpened(!isModalOpened)
@@ -79,6 +78,7 @@ export default function Address() {
                 <NewAddressModal
                     isModalOpened={isModalOpened}
                     handleAddressToggle={handleAddressToggle}
+                    setIsModalOpened={setIsModalOpened}
                 />
             }
             {
@@ -87,6 +87,7 @@ export default function Address() {
                     isEditModalOpened={isEditModalOpened}
                     toggleUpdateAddress={toggleUpdateAddress}
                     selectedAddress={selectedAddress}
+                    setIsEditModalOpened={setIsEditModalOpened}
                 />
             }
             <Paper>
@@ -105,7 +106,12 @@ export default function Address() {
                                         {item.country}
                                     </div>
                                 </div>
-                                <Button small variant='contained' color='secondary' onClick={() => handleRemoveAddress(item._id)}><CloseIcon /></Button>
+                                <Button small
+                                    variant='contained'
+                                    color='secondary'
+                                    onClick={() => handleRemoveAddress(item._id)}>
+                                    <CloseIcon />
+                                </Button>
                             </div>
                             <Button
                                 variant='contained'
@@ -119,7 +125,12 @@ export default function Address() {
                 })}
 
 
-                <Button style={{ margin: '20px' }} variant='contained' onClick={handleAddressToggle} >Add Address</Button>
+                <Button
+                    style={{ margin: '20px' }}
+                    variant='contained'
+                    onClick={handleAddressToggle}>
+                    Add Address
+                </Button>
             </Paper>
 
         </>
